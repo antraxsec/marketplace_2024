@@ -16,7 +16,7 @@ const MainComponent = async () => {
   //console.log(productos.datos);
 
   return (
-    <div className="min-h-full">
+    <div >
       <Splidecomponent productos={Object.values(productos.datos)} />
     </div>
   );

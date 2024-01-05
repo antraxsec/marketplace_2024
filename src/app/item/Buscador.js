@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Buscador() {
+
+  // Estado para controlar los valores seleccionados
+  const [selectedMarcas, setSelectedMarcas] = useState({});
+
+  // Manejar cambio en los checkboxes
+  const handleCheckboxChange = (marca) => {
+    setSelectedMarcas((prevSelectedMarcas) => ({
+      ...prevSelectedMarcas,
+      [marca]: !prevSelectedMarcas[marca]
+    }));
+  };
+
+  // Lista de marcas para el ejemplo
+  const marcas = ["HP", "Lenovo", "Dell", "Asus", "Acer", "Samsung"];
+
   return (
     <div class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
       <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
@@ -18,23 +33,34 @@ export default function Buscador() {
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
+                  d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59"
                 />
               </svg>
             </div>
             <div>
+
+
               <a href="#" class="font-semibold text-gray-900">
-                Analytics
+                marcas
                 <span class="absolute inset-0"></span>
               </a>
-              <p class="mt-1 text-gray-600">
-                Get a better understanding of your traffic
-              </p>
+              {/* Contenedor de checkboxes */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-6 p-4 bg-gray-100 rounded-lg shadow-md">
+                {marcas.map((marca) => (
+                  <div key={marca} className="flex relative flex-col items-center">
+                    <input
+                      type="checkbox"
+                      checked={!!selectedMarcas[marca]} // Convertir a booleano para asegurar el correcto manejo del estado
+                      onChange={() => handleCheckboxChange(marca)}
+                      className="form-checkbox h-5 w-5 text-blue-600 mb-1" // Margen abajo para espacio entre checkbox y texto
+                    />
+                    <label className="text-gray-700 text-xs">{marca}</label> {/* Tamaño de texto reducido */}
+                  </div>
+                ))}
+              </div>
+
+
+
             </div>
           </div>
           <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
@@ -56,10 +82,23 @@ export default function Buscador() {
             </div>
             <div>
               <a href="#" class="font-semibold text-gray-900">
-                Engagement
+                Procesador
                 <span class="absolute inset-0"></span>
               </a>
-              <p class="mt-1 text-gray-600">Speak directly to your customers</p>
+              {/* Contenedor de checkboxes */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-6 p-4 bg-gray-100 rounded-lg shadow-md">
+                {marcas.map((marca) => (
+                  <div key={marca} className="flex relative flex-col items-center">
+                    <input
+                      type="checkbox"
+                      checked={!!selectedMarcas[marca]} // Convertir a booleano para asegurar el correcto manejo del estado
+                      onChange={() => handleCheckboxChange(marca)}
+                      className="form-checkbox h-5 w-5 text-blue-600 mb-1" // Margen abajo para espacio entre checkbox y texto
+                    />
+                    <label className="text-gray-700 text-xs">{marca}</label> {/* Tamaño de texto reducido */}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
@@ -81,7 +120,7 @@ export default function Buscador() {
             </div>
             <div>
               <a href="#" class="font-semibold text-gray-900">
-                Security
+                Ram
                 <span class="absolute inset-0"></span>
               </a>
               <p class="mt-1 text-gray-600">
@@ -108,7 +147,7 @@ export default function Buscador() {
             </div>
             <div>
               <a href="#" class="font-semibold text-gray-900">
-                Integrations
+                Almacenamiento
                 <span class="absolute inset-0"></span>
               </a>
               <p class="mt-1 text-gray-600">Connect with third-party tools</p>
@@ -133,7 +172,7 @@ export default function Buscador() {
             </div>
             <div>
               <a href="#" class="font-semibold text-gray-900">
-                Automations
+                Pantalla
                 <span class="absolute inset-0"></span>
               </a>
               <p class="mt-1 text-gray-600">
