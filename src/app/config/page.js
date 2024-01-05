@@ -4,6 +4,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 // Asegúrate de que este es el camino correcto a tu componente Card
 
+
 const MainComponent = () => {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100">
