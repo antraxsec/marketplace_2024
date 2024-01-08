@@ -1,14 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Buscador from "./Buscador";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import Link from "next/link";
 import Card from "@/components/Card";
 import { BsSearch } from "react-icons/bs";
+import { useProductos } from "@/context/Context";
 export default function Splidecomponent({ productos }) {
-  const [filter, setFilter] = useState(true);
-  console.log(productos)
+  const [filter, setFilter] = useState(false);
+  //console.log(productos);
+
   /**
    * para filtrar
    */
@@ -24,7 +26,7 @@ export default function Splidecomponent({ productos }) {
 
       {filter ? <Buscador /> : ""}
 
-      <main className="flex flex-col min-h-screen items-center justify-center bg-gray-100 md:flex-row" >
+      <main className="flex flex-col min-h-screen items-center justify-center bg-gray-100 md:flex-row">
         <Splide
           options={{
             type: "slide",
@@ -33,8 +35,7 @@ export default function Splidecomponent({ productos }) {
             gap: "0px",
             pagination: false,
             arrows: true,
-            padding: '10px',
-
+            padding: "10px",
           }}
           className="w-full md:max-w-screen-xl"
         >

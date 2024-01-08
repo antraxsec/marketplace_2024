@@ -3,12 +3,7 @@ import Splidecomponent from "./Splidecomponent";
 //Asegúrate de que este es el camino correcto a tu componente Card
 const fetchProducto = () => {
   return fetch(
-    "https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G",
-    {
-      next: {
-        revalidate: 60,
-      },
-    }
+    "https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G"
   ).then((res) => res.json());
 };
 const MainComponent = async () => {
@@ -16,7 +11,7 @@ const MainComponent = async () => {
   //console.log(productos.datos);
 
   return (
-    <div >
+    <div>
       <Splidecomponent productos={Object.values(productos.datos)} />
     </div>
   );
