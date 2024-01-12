@@ -1,50 +1,33 @@
-"use client";
-import Card from "@/components/Card";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/splide/dist/css/splide.min.css";
-// Asegúrate de que este es el camino correcto a tu componente Card
+"use client"
+import React, { useState } from 'react'
 
-
-const MainComponent = () => {
+export default function page() {
+  const [menuVisible, setMenuVisible] = useState(false);
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100">
-      <Splide
-        options={{
-          type: "slide",
-          perPage: 2,
-          perMove: 1,
-          gap: "10",
-          pagination: false,
-          arrows: true,
-          padding: 100,
-          breakpoints: {
-            420: {
-              perPage: 1,
-            },
-            640: {
-              perPage: 2,
-            },
-          },
-        }}
-        className="max-w-screen-xl mx-auto"
+    <div className="flex">
+      {/* Botón para mostrar/ocultar el menú */}
+      <button
+        className="p-2 text-white bg-blue-500"
+        onClick={() => setMenuVisible(!menuVisible)}
       >
-        {/* Aquí repetirías tu componente de producto dentro de SplideSlide tantas veces como sea necesario */}
-        <SplideSlide>
-          <Card />
-        </SplideSlide>
-        <SplideSlide>
-          <Card />
-        </SplideSlide>
-        <SplideSlide>
-          <Card />
-        </SplideSlide>
-        <SplideSlide>
-          <Card />
-        </SplideSlide>
-        {/* ... */}
-      </Splide>
-    </main>
-  );
-};
+        {menuVisible ? 'Ocultar Filtros' : 'Mostrar Filtros'}
+      </button>
 
-export default MainComponent;
+      {/* Menú de filtros */}
+      <div
+        className={`transform transition-transform ${menuVisible ? 'translate-x-0' : '-translate-x-full'
+          } w-64 bg-gray-200 p-4 fixed inset-y-0 left-0`}
+      >
+        {/* Contenido del menú */}
+        <h3 className="font-bold mb-2">Marcas</h3>
+        {/* Lista de marcas */}
+        {/* ... */}
+      </div>
+
+      {/* Contenido principal */}
+      <div className="flex-grow p-4">
+        {/* Aquí va el contenido principal de la página */}
+      </div>
+    </div>
+  )
+}
