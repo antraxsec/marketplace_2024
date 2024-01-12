@@ -36,3 +36,6 @@ const ImageLoader = ({ src, alt, className }) => {
 };
 
 export default ImageLoader;
+
+
+

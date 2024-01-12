@@ -12,15 +12,9 @@ import Buscar2 from "../Buscar2";
 
 export default function Splidecomponent() {
   const router = useRouter();
-  const { productos, isLoaded, productosFiltrados } = useProductos()
+  const { productos, isLoaded, productosFiltrados } = useProductos();
   const [menuVisible, setMenuVisible] = useState(false);
   // const [filter, setFilter] = useState(false);
-
-
-
-
-  
-
 
   return (
     <div>
@@ -64,10 +58,7 @@ export default function Splidecomponent() {
             breakpoints: {
               640: { perPage: 1 }, // En pantallas menores a 640px muestra 1 item
               768: { perPage: 2 }, // En pantallas menores a 768px muestra 2 items
-              1024: { perPage: 3 }, // En pantallas menores a 1024px muestra 3 items
-              1280: { perPage: 4 }, // En pantallas menores a 1280px muestra 4 items
-              1440: { perPage: 5 }, // En pantallas de 1440px o más muestra 5 items
-              // Puedes seguir agregando más puntos de interrupción si es necesario
+              1024: { perPage: 3 }, // En pantallas mayores a 1024px muestra 3 items
             },
           }}
           className="w-full md:max-w-screen-xl"

@@ -2,11 +2,13 @@ import ImageLoader from "@/app/item/ImageLoader";
 import { useProductos } from "@/context/Context";
 import Link from "next/link";
 function Card({ producto }) {
-
-  const { precioGanacia } = useProductos()
+  const { precioGanacia } = useProductos();
   const obtenerImagenUrl = () => {
-    const imagen = Object.values(producto.imagenes).find(row => row.cod_albumtipo === "5");
-    return imagen ? `https://multilaptops.net/${imagen.ruta_img}`
+    const imagen = Object.values(producto.imagenes).find(
+      (row) => row.cod_albumtipo === "5"
+    );
+    return imagen
+      ? `https://multilaptops.net/${imagen.ruta_img}`
       : `https://multilaptops.net/recursos/imagenes/productos/sin_imagen.webp`;
   };
 
@@ -20,14 +22,12 @@ function Card({ producto }) {
   }
 
   return (
-    <div className="mx-3 my-4 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center p-2 sm:max-w-sm"
-
-    >
+    <div className="mx-3 my-4 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center p-2 sm:max-w-sm h-[500px]">
       <Link href={`/item/${producto.id_producto}`}>
         <img
-          className="w-full mt-1 object-cover h-48 sm:h-48 md:h-64 lg:h-auto"
+          className="w-full h-48 object-contain"
           src={obtenerImagenUrl()}
-          alt="Laptop"
+          alt="Producto"
         />
         {/* <ImageLoader
           className="w-full mt-1 object-cover h-48 sm:h-48 md:h-64 lg:h-auto"
@@ -35,47 +35,56 @@ function Card({ producto }) {
           alt="Laptop"
         /> */}
       </Link>
-      <p className="mt-1 text-lg font-bold tracking-tight text-gray-900 sm:text-xl ">
-        {producto.nombre_linea}
-      </p>
-      <small className="absolute top-5 left-4 text-xs font-bold bg-gray-900 p-1 text-white rounded"> {producto.nombre_marca}</small>
+      <div className="flex flex-col justify-between flex-grow w-full">
+        <p className="mt-1 text-lg font-bold tracking-tight text-gray-900 sm:text-xl text-center ">
+          {producto.nombre_linea || "Laptops"}
+        </p>
+        {/* <small className="absolute top-5 left-4 text-xs font-bold bg-gray-900 p-1 text-white rounded">
+          {producto.nombre_marca}
+        </small> */}
 
-      <div className="text-left w-full px-4 sm:px-10 mt-3">
-        {/* Especificaciones del Producto */}
-        {['Procesador', 'Memoria RAM', 'Unidad  solido (SSD)', 'Pantalla'].map((cualidad, index) => (
-          <div key={index}>
-            <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-2">
-              {cualidad}
-            </h6>
-            {Object.values(producto.especificacion).map((row, i) => {
-              return row.cualidad === cualidad ? (
-                <p key={i} className="text-xxs sm:text-xs text-gray-700">
-                  {getFourWords(row.referencia_esp)}
-                </p>
-              ) : null;
-            })}
-          </div>
-        ))}
-      </div>
+        <div className="text-left w-full px-4 sm:px-10">
+          <small className="my-3 top-5 left-4 text-xs font-bold bg-gray-500 p-1 text-white rounded">
+            {producto.nombre_marca} SKU:{producto.id_producto}
+          </small>
+          {/* Especificaciones del Producto */}
+          {[
+            "Procesador",
+            "Memoria RAM",
+            "Unidad  solido (SSD)",
+            "Pantalla",
+          ].map((cualidad, index) => (
+            <div key={index}>
+              <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-2">
+                {cualidad}
+              </h6>
+              {Object.values(producto.especificacion).map((row, i) => {
+                return row.cualidad === cualidad ? (
+                  <p key={i} className="text-xxs sm:text-xs text-gray-700">
+                    {getFourWords(row.referencia_esp)}
+                  </p>
+                ) : null;
+              })}
+            </div>
+          ))}
+        </div>
 
+        <div className="mt-3 flex flex-col items-center">
+          <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-2">
+            Bs{" "}
+            {(
+              (Number(producto.costo_avg) + precioGanacia) *
+              Number(producto.factor_avg)
+            ).toFixed(2)}
+          </span>
 
-      <div className="mt-3 flex flex-col items-center">
-        <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-2">
-          Bs {((Number(producto.costo_avg) + precioGanacia) * Number(producto.factor_avg)).toFixed(2)}
-        </span>
-
-        {/* <span className="text-sm font-medium text-gray-500 line-through">
+          {/* <span className="text-sm font-medium text-gray-500 line-through">
           Bs {(Number(producto.costo_avg) * Number(producto.factor_avg)).toFixed(2)}
         </span> */}
-
+        </div>
       </div>
-
     </div>
   );
 }
 
 export default Card;
-
-
-
-

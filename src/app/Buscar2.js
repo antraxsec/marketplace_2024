@@ -123,133 +123,168 @@ export default function Buscar2() {
     }
 
     return (
+      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto my-8">
+        <div className="flex justify-center mt-6">
+          <p className="text-2xl font-bold text-gray-900 sm:text-3xl mb-3 text-white">
+            Multilaptops
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-1 gap-4 ">
+          {/* Filtros para marcas */}
+          <div>
+            <p className="font-semibold mb-2">Marcas</p>
+            {["Hp", "Lenovo", "Dell", "Asus", "Msi", "Acer", "Samsung"].map(
+              (brand) => (
+                <label key={brand} className="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox h-5 w-5"
+                    checked={selectedBrands.includes(brand)}
+                    onChange={() =>
+                      handleCheckboxChange(
+                        setSelectedBrands,
+                        selectedBrands,
+                        brand
+                      )
+                    }
+                  />
+                  <span className="ml-2 text-white">{brand}</span>
+                </label>
+              )
+            )}
+          </div>
 
+          {/* Filtros para procesadores */}
+          <div>
+            <p className="font-semibold mb-2">Procesador</p>
+            {["i3", "i5", "i7", "Ryzen 3", "Ryzen 5", "Ryzen 7"].map(
+              (processor) => (
+                <label key={processor} className="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox h-5 w-5"
+                    checked={selectedProcessors.includes(processor)}
+                    onChange={() =>
+                      handleCheckboxChange(
+                        setSelectedProcessors,
+                        selectedProcessors,
+                        processor
+                      )
+                    }
+                  />
+                  <span className="ml-2 text-white">{processor}</span>
+                </label>
+              )
+            )}
+          </div>
 
+          {/* Filtros para RAM */}
+          <div>
+            <p className="font-semibold mb-2">RAM</p>
+            {["4GB", "8GB", "12GB", "16GB"].map((ram) => (
+              <label key={ram} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5"
+                  checked={selectedRam.includes(ram)}
+                  onChange={() =>
+                    handleCheckboxChange(setSelectedRam, selectedRam, ram)
+                  }
+                />
+                <span className="ml-2 text-white">{ram}</span>
+              </label>
+            ))}
+          </div>
 
+          {/* Filtros para tamaño de pantalla */}
+          <div>
+            <p className="font-semibold mb-2">Tamaño Pantalla</p>
+            {['13"', '14"', '15"', '17"'].map((size) => (
+              <label key={size} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5"
+                  checked={selectedScreenSize.includes(size)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      setSelectedScreenSize,
+                      selectedScreenSize,
+                      size
+                    )
+                  }
+                />
+                <span className="ml-2 text-white">{size}</span>
+              </label>
+            ))}
+          </div>
+        </div>
 
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto my-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-1 mt-1">
+          {/* Filtros para almacenamiento */}
+          <div>
+            <p className="font-semibold mb-2">Almacenamiento</p>
+            {["128GB", "256GB", "512GB", "1TB"].map((storage) => (
+              <label key={storage} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5"
+                  checked={selectedStorage.includes(storage)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      setSelectedStorage,
+                      selectedStorage,
+                      storage
+                    )
+                  }
+                />
+                <span className="ml-2 text-white">{storage}</span>
+              </label>
+            ))}
+          </div>
+
+          {/* Filtros para gráficos */}
+          <div>
+            <p className="font-semibold mb-2">Gráficos</p>
+            {[
+              "Intel® UHD Graphics",
+              "Intel® Iris® Plus",
+              "AMD Radeon™ Graphics",
+              "Nvidia® GeForce®",
+              "Nvidia® GeForce® GTX™",
+              "Nvidia® GeForce® RTX™",
+            ].map((graphics) => (
+              <label key={graphics} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5"
+                  checked={selectedGraphics.includes(graphics)}
+                  onChange={() =>
+                    handleCheckboxChange(
+                      setSelectedGraphics,
+                      selectedGraphics,
+                      graphics
+                    )
+                  }
+                />
+                <span className="ml-2 text-white">{graphics}</span>
+              </label>
+            ))}
+          </div>
+
+          <div>
+            {/* Botón de búsqueda */}
+
             <div className="flex justify-center mt-6">
-                <p className="text-2xl font-bold text-gray-900 sm:text-3xl mb-3 text-white">Multilaptops</p>
+              <button
+                type="submit"
+                className="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-black hover:bg-opacity-75"
+              >
+                Filtrar
+              </button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-1 gap-4 ">
-                {/* Filtros para marcas */}
-                <div>
-                    <p className="font-semibold mb-2">Marcas</p>
-                    {['Hp', 'Lenovo', 'Dell', 'Asus', 'Msi', 'Acer', 'Samsung'].map((brand) => (
-                        <label key={brand} className="flex items-center mb-2">
-                            <input
-                                type="checkbox"
-                                className="form-checkbox h-5 w-5"
-                                checked={selectedBrands.includes(brand)}
-                                onChange={() => handleCheckboxChange(setSelectedBrands, selectedBrands, brand)}
-                            />
-                            <span className="ml-2 text-white">{brand}</span>
-                        </label>
-                    ))}
-                </div>
-
-                {/* Filtros para procesadores */}
-                <div>
-                    <p className="font-semibold mb-2">Procesador</p>
-                    {['i3', 'i5', 'i7', 'Ryzen 3', 'Ryzen 5', 'Ryzen 7'].map((processor) => (
-                        <label key={processor} className="flex items-center mb-2">
-                            <input
-                                type="checkbox"
-                                className="form-checkbox h-5 w-5"
-                                checked={selectedProcessors.includes(processor)}
-                                onChange={() => handleCheckboxChange(setSelectedProcessors, selectedProcessors, processor)}
-                            />
-                            <span className="ml-2 text-white">{processor}</span>
-                        </label>
-                    ))}
-                </div>
-
-                {/* Filtros para RAM */}
-                <div>
-                    <p className="font-semibold mb-2">RAM</p>
-                    {['4GB', '8GB', '12GB', '16GB'].map((ram) => (
-                        <label key={ram} className="flex items-center mb-2">
-                            <input
-                                type="checkbox"
-                                className="form-checkbox h-5 w-5"
-                                checked={selectedRam.includes(ram)}
-                                onChange={() => handleCheckboxChange(setSelectedRam, selectedRam, ram)}
-                            />
-                            <span className="ml-2 text-gray-700">{ram}</span>
-                        </label>
-                    ))}
-                </div>
-
-                {/* Filtros para tamaño de pantalla */}
-                <div>
-                    <p className="font-semibold mb-2">Tamaño Pantalla</p>
-                    {['13"', '14"', '15"', '17"'].map((size) => (
-                        <label key={size} className="flex items-center mb-2">
-                            <input
-                                type="checkbox"
-                                className="form-checkbox h-5 w-5"
-                                checked={selectedScreenSize.includes(size)}
-                                onChange={() => handleCheckboxChange(setSelectedScreenSize, selectedScreenSize, size)}
-                            />
-                            <span className="ml-2 text-white">{size}</span>
-                        </label>
-                    ))}
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-1 mt-1">
-                {/* Filtros para almacenamiento */}
-                <div>
-                    <p className="font-semibold mb-2">Almacenamiento</p>
-                    {['128GB', '256GB', '512GB', '1TB'].map((storage) => (
-                        <label key={storage} className="flex items-center mb-2">
-                            <input
-                                type="checkbox"
-                                className="form-checkbox h-5 w-5"
-                                checked={selectedStorage.includes(storage)}
-                                onChange={() => handleCheckboxChange(setSelectedStorage, selectedStorage, storage)}
-                            />
-                            <span className="ml-2 text-white">{storage}</span>
-                        </label>
-                    ))}
-                </div>
-
-                {/* Filtros para gráficos */}
-                <div>
-                    <p className="font-semibold mb-2">Gráficos</p>
-                    {['Intel® UHD Graphics', 'Intel® Iris® Plus', 'AMD Radeon™ Graphics', 'Nvidia® GeForce®', 'Nvidia® GeForce® GTX™', 'Nvidia® GeForce® RTX™'].map((graphics) => (
-                        <label key={graphics} className="flex items-center mb-2">
-                            <input
-                                type="checkbox"
-                                className="form-checkbox h-5 w-5"
-                                checked={selectedGraphics.includes(graphics)}
-                                onChange={() => handleCheckboxChange(setSelectedGraphics, selectedGraphics, graphics)}
-                            />
-                            <span className="ml-2 text-white">{graphics}</span>
-                        </label>
-                    ))}
-                </div>
-
-                <div>
-                    {/* Botón de búsqueda */}
-
-                    <div className="flex justify-center mt-6">
-                        <button
-                            type="submit"
-                            className="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-black hover:bg-opacity-75"
-                        >
-                            Filtrar
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-
-        </form>
-
-
-
-
+          </div>
+        </div>
+      </form>
     );
 }
 
