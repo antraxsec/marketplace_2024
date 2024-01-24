@@ -2,73 +2,87 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const ProductosContext = createContext();
-console.log('Context')
 export const useProductos = () => {
   const context = useContext(ProductosContext);
-  if (!context)
-    throw new Error("useProductos must be used within ProductosProvider");
+  if (!context) {
+    throw new Error("useProductos must be used within a ProductosProvider");
+  }
   return context;
 };
 
-
-
-// Asumiendo que ya tienes ProductosContext creado
 export const ProductosProvider = ({ children }) => {
   const [productos, setProductos] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
-  const [precioGanacia, setPrecioGanancia] = useState(90)
+  const [precioGanacia, setPrecioGanancia] = useState(90);
+  const [precioVisible, setPrecioVisible] = useState(true);
+  const [isChecked, setIsChecked] = useState(true);
 
   // Función para guardar en localStorage
-  const guardarEnLocalStorage = (productos) => {
-    localStorage.setItem('productosFiltrados', JSON.stringify(productos));
+  const guardarEnLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+
+  // Función para recuperar de localStorage
+  const recuperarDeLocalStorage = (key) => {
+    return JSON.parse(localStorage.getItem(key));
   };
 
   const fetchProducto = async () => {
-
+    setIsLoaded(false);
     try {
-      const response = await fetch(
-        "https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G"
-      );
+      const response = await fetch("https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G");
       const data = await response.json();
       let datosnew = Object.values(data.datos);
-
-      console.log('Context Productos', datosnew)
       setProductos(datosnew);
-      //setProductosFiltrados(datosnew)
-      setIsLoaded(true); // Se establece a true después de cargar los datos
     } catch (error) {
       console.error("Error al cargar datos:", error);
-      setIsLoaded(true); // También se establece a true en caso de error
     }
+    setIsLoaded(true);
   };
 
+  // Efecto para cargar productos y recuperar productos filtrados al iniciar
   useEffect(() => {
     fetchProducto();
-
-    // Recuperar productos filtrados de localStorage al iniciar
-    const productosGuardados = localStorage.getItem('productosFiltrados');
-    if (productosGuardados) {
-      setProductosFiltrados(JSON.parse(productosGuardados));
-    }
+    setProductosFiltrados(recuperarDeLocalStorage('productosFiltrados') || []);
   }, []);
 
   // Efecto para guardar productos filtrados en localStorage cuando cambian
   useEffect(() => {
-    if (productosFiltrados.length > 0) {
-      guardarEnLocalStorage(productosFiltrados);
-    }
+    guardarEnLocalStorage('productosFiltrados', productosFiltrados);
   }, [productosFiltrados]);
 
   const filtrar = (data) => {
-    console.log('Productos Context FILTRADO', data);
     setProductosFiltrados(data);
   };
 
+  const verPrecio = (data) => {
+    setPrecioVisible(data);
+  };
+
+  const preciosG = (data) => {
+    setPrecioGanancia(data);
+  };
+
+  const mostrarPrecio = () => {
+    setIsChecked(!isChecked)
+  }
+
+  // Mandar datos
   return (
-    <ProductosContext.Provider value={{ productos, isLoaded, productosFiltrados, precioGanacia, filtrar }}>
+    <ProductosContext.Provider value={{
+      productos,
+      isLoaded,
+      productosFiltrados,
+      precioGanacia,
+      filtrar,
+      verPrecio,
+      preciosG,
+      precioVisible,
+      mostrarPrecio,
+      isChecked
+    }}>
       {children}
     </ProductosContext.Provider>
   );
 };
-

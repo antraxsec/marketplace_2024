@@ -2,3 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+.card-hover-img {
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.card-hover:hover .card-hover-img {
+    opacity: 0.9;
+    filter: brightness(1.1);
+}
+
+.card-info-element {
+    transition: transform 0.2s ease;
+}
+
+.card-hover:hover .card-info-element {
+    transform: scale(1.08);
+}
+
+/* Estilos para el texto "multilaptops" */
+.multilaptops-text {
+    font-size: 2xl;
+    font-weight: bold;
+}
+
+/* Clases para los colores */
+.color-one {
+    color: #000000;
+    /* Reemplaza #color1 con el código de color real que deseas usar */
+}
+
+.color-two {
+    color: #7159FE;
+    /* Reemplaza #color2 con el código de color real que deseas usar */
+}
+
+/*sombra img*/
+/* .sombra-png {
+    filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.7));
+} */
+
+/* Estilo para la barra de desplazamiento en su totalidad */
+.scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #666 #999;
+    /* thumb and track color in Firefox */
+}
+
+/* Estilo para el "thumb" (la parte que agarras) */
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: #999;
+    /* Color del thumb */
+    border-radius: 7px;
+    /* Bordes redondeados */
+}
+
+/* Estilo para el "track" (la trayectoria por donde se mueve el thumb) */
+.scrollbar::-webkit-scrollbar-track {
+    background-color: #fff;
+    /* Color del track */
+}
+
+/* Estilo para la barra de desplazamiento (en general) */
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+    /* Ancho de la barra de desplazamiento */
+}
+
+/* .menu-transparente {
+    background-color: rgba(0, 0, 0, 0.7);
+
+} */

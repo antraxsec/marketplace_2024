@@ -1,0 +1,53 @@
+.fondo {
+    background: linear-gradient(to right, #0D1117, #21262D);
+    /* Gradiente de ejemplo */
+    color: #ffffff;
+    /* Asegúrate de que el texto sea legible */
+    /* Otros estilos */
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 6em;
+    /* Ajusta el tamaño del texto según lo necesites */
+    font-weight: bold;
+    color: #000;
+    /* Color base del texto */
+    text-shadow:
+        0 1px 0 #ccc,
+        0 2px 0 #c9c9c9,
+        0 3px 0 #bbb,
+        0 4px 0 #b9b9b9,
+        0 5px 0 #aaa,
+        0 6px 1px rgba(0, 0, 0, .1),
+        0 0 5px rgba(0, 0, 0, .1),
+        0 1px 3px rgba(0, 0, 0, .3),
+        0 3px 5px rgba(0, 0, 0, .2),
+        0 5px 10px rgba(0, 0, 0, .25),
+        0 10px 10px rgba(0, 0, 0, .2),
+        0 20px 20px rgba(0, 0, 0, .15);
+}
+
+.multi {
+    color: #7D5BD0;
+    /* Color específico para "multi" */
+}
+
+.laptops {
+    color: #333;
+    /* Color específico para "laptops" */
+
+}
+
+@keyframes brillo {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #E600FF, 0 0 40px #E600FF, 0 0 50px #E600FF, 0 0 60px #E600FF, 0 0 70px #E600FF;
+    }
+
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #FF77FF, 0 0 40px #FF77FF, 0 0 50px #FF77FF, 0 0 60px #FF77FF, 0 0 70px #FF77FF, 0 0 80px #FF77FF;
+    }
+}
