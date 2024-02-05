@@ -109,7 +109,7 @@ export default function Splidecomponent() {
             }
           }}
         >
-          <h6 className="mx-6  text-xs sm:text-sm font-bold text-gray-900  p-2">
+          <h6 className="mx-6 text-2xl font-bold text-gray-900 py-5">
             {marca}
           </h6> {/* Título de la marca */}
           <Splide options={{
@@ -119,18 +119,42 @@ export default function Splidecomponent() {
             //pauseOnHover: true,
             perPage: 4,
             perMove: 1,
-            gap: "0px",
+            type: "slide",
+            // gap: '1rem',
+            // arrows: true,
             pagination: false,
-            arrows: true,
-            padding: "10px",
+            gap: 10,
+            padding: 5,
             breakpoints: {
-              640: { perPage: 1 }, // En pantallas menores a 640px muestra 1 item
-              768: { perPage: 2 }, // En pantallas menores a 768px muestra 2 items
-              1024: { perPage: 3 }, // En pantallas menores a 1024px muestra 3 items
-              1280: { perPage: 4 }, // En pantallas menores a 1280px muestra 4 items
-              1440: { perPage: 5 }, // En pantallas de 1440px o más muestra 5 items
-              // Puedes seguir agregando más puntos de interrupción si es necesario
-            },
+                420: {
+                    perPage: 1
+                },
+                640: {
+                    perPage: 1
+                },
+                768: {
+                    perPage: 2
+                },
+                991: {
+                    perPage: 2
+                },
+                1024: {
+                    perPage: 2
+                },
+                1200: {
+                    perPage: 2
+                },
+                1440: {
+                    perPage: 3
+                },
+                1600: {
+                    perPage: 4
+                },
+                1920: {
+                    perPage: 4
+                }
+
+          }
           }}>
             {productosPorMarca[marca].slice(0, 30).map((producto) => (
               <SplideSlide key={producto.id_producto}>
