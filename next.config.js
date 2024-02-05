@@ -1,8 +1,8 @@
 /////////1//////
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {}
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
 
-// module.exports = nextConfig
+module.exports = nextConfig
 
 ////////2////////////
 // const runtimeCaching = require("next-pwa/cache");
@@ -52,51 +52,51 @@
 // module.exports = nextConfig;
 
 /////////////4/////////////
-const runtimeCaching = require("next-pwa/cache");
+// const runtimeCaching = require("next-pwa/cache");
 
-// Configuración personalizada del caché
-const customRuntimeCaching = [
-    {
-        // Cachear imágenes .webp
-        urlPattern: /.*\.(?:webp)/,
-        handler: 'CacheFirst',
-        options: {
-            cacheName: 'webp-images',
-            expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 7 * 24 * 60 * 60, // 7 días
-            },
-        },
-    },
-    {
-        // Cachear archivos CSS y JS
-        urlPattern: /.*\.(?:css|js)/,
-        handler: 'StaleWhileRevalidate',
-        options: {
-            cacheName: 'static-resources',
-        },
-    },
-    {
-        // Cachear páginas HTML (opcional)
-        urlPattern: /\/$/,
-        handler: 'NetworkFirst',
-        options: {
-            cacheName: 'html-pages',
-        },
-    },
-    ...runtimeCaching, // Configuración predeterminada de next-pwa
-];
+// // Configuración personalizada del caché
+// const customRuntimeCaching = [
+//     {
+//         // Cachear imágenes .webp
+//         urlPattern: /.*\.(?:webp)/,
+//         handler: 'CacheFirst',
+//         options: {
+//             cacheName: 'webp-images',
+//             expiration: {
+//                 maxEntries: 20,
+//                 maxAgeSeconds: 7 * 24 * 60 * 60, // 7 días
+//             },
+//         },
+//     },
+//     {
+//         // Cachear archivos CSS y JS
+//         urlPattern: /.*\.(?:css|js)/,
+//         handler: 'StaleWhileRevalidate',
+//         options: {
+//             cacheName: 'static-resources',
+//         },
+//     },
+//     {
+//         // Cachear páginas HTML (opcional)
+//         urlPattern: /\/$/,
+//         handler: 'NetworkFirst',
+//         options: {
+//             cacheName: 'html-pages',
+//         },
+//     },
+//     ...runtimeCaching, // Configuración predeterminada de next-pwa
+// ];
 
-const withPWA = require("next-pwa")({
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-    runtimeCaching: customRuntimeCaching,
-    buildExcludes: [/middleware-manifest.json$/],
-});
+// const withPWA = require("next-pwa")({
+//     dest: "public",
+//     register: true,
+//     skipWaiting: true,
+//     runtimeCaching: customRuntimeCaching,
+//     buildExcludes: [/middleware-manifest.json$/],
+// });
 
-const nextConfig = withPWA({
-    // Configuración adicional de Next.js aquí
-});
+// const nextConfig = withPWA({
+//     // Configuración adicional de Next.js aquí
+// });
 
-module.exports = nextConfig;
+// module.exports = nextConfig;

@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 
 export const ProductosContext = createContext();
 export const useProductos = () => {
@@ -17,6 +17,7 @@ export const ProductosProvider = ({ children }) => {
   const [precioGanacia, setPrecioGanancia] = useState(90);
   const [precioVisible, setPrecioVisible] = useState(true);
   const [isChecked, setIsChecked] = useState(true);
+  const [visibleDetalles, setVisibleDetalles] = useState(true)
 
   // Función para guardar en localStorage
   const guardarEnLocalStorage = (key, value) => {
@@ -35,24 +36,39 @@ export const ProductosProvider = ({ children }) => {
       const data = await response.json();
       let datosnew = Object.values(data.datos);
       setProductos(datosnew);
+
     } catch (error) {
       console.error("Error al cargar datos:", error);
     }
     setIsLoaded(true);
   };
 
+
+
+
+
+
+
   // Efecto para cargar productos y recuperar productos filtrados al iniciar
   useEffect(() => {
     fetchProducto();
-    setProductosFiltrados(recuperarDeLocalStorage('productosFiltrados') || []);
+
+    //setProductosFiltrados(recuperarDeLocalStorage('productosFiltrados') || []);
   }, []);
+
+
 
   // Efecto para guardar productos filtrados en localStorage cuando cambian
   useEffect(() => {
-    guardarEnLocalStorage('productosFiltrados', productosFiltrados);
+    if (productosFiltrados.length === 0) {
+      setProductosFiltrados(productos)
+    }
+
+    //guardarEnLocalStorage('productosFiltrados', productosFiltrados);
   }, [productosFiltrados]);
 
   const filtrar = (data) => {
+    guardarEnLocalStorage('productosFiltrados', data);
     setProductosFiltrados(data);
   };
 
@@ -67,6 +83,9 @@ export const ProductosProvider = ({ children }) => {
   const mostrarPrecio = () => {
     setIsChecked(!isChecked)
   }
+  const mostrarDetalles = () => {
+    setVisibleDetalles(!visibleDetalles)
+  }
 
   // Mandar datos
   return (
@@ -80,7 +99,9 @@ export const ProductosProvider = ({ children }) => {
       preciosG,
       precioVisible,
       mostrarPrecio,
-      isChecked
+      isChecked,
+      visibleDetalles,
+      mostrarDetalles
     }}>
       {children}
     </ProductosContext.Provider>

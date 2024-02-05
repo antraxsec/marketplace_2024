@@ -10,6 +10,7 @@ import Loading from "@/components/Loading";
 import { loadFontAwesome } from "../services/fontawesome";
 import Buscador from "@/components/Buscador";
 import { useRouter } from "next/navigation";
+import Navbar from "../Navbar";
 
 export default function Splidecomponent() {
   const router = useRouter();
@@ -57,38 +58,31 @@ export default function Splidecomponent() {
 
   return (
     <div className="" >
+
+      <Navbar setMenuVisible={setMenuVisible} />
+
+
       {loadFontAwesome()}
-      <div className="fixed  top-1 left-1/2 transform -translate-x-1/2 z-50 ">
-        <button
-          className={` text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-s-lg  text-sm px-5 py-2.5 text-center  
+      {/* <div className="fixed  top-1 left-1/2 transform -translate-x-1/2 z-50 ">
+        <div className="grid grid-cols-2 gap-0">
+          <div className=" flex justify-end items-end ">
+            <button
+              className={` text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-s-lg  text-sm px-5 py-2.5 text-center  
             }`}
-          type="button"
+              type="button"
 
-          onClick={() => setMenuVisible(!menuVisible)}
-        >
+              onClick={() => setMenuVisible(!menuVisible)}
+            >
 
-          <i className="fa fa-light fa fa-cog"></i> Filtrar
-        </button>
-        <button
-          className={`text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-e-lg text-sm px-5 py-2.5 text-center me-2 mb-2
-            }`}
-          type="button"
-
-          onClick={() => setSearchVisible(!searchVisible)}
-        >
-
-          <i className="fa fa-light fa fa-search"></i> Buscar
-        </button>
-      </div>
-      {/* menu busqueda input  */}
-      {searchVisible && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center menu-transparente" >
-          <div className="p-4 w-full max-w-lg ">
-            {/* Formulario de búsqueda */}
-            <Buscador verBuscador={verBuscador} />
+              <i className="fa fa-light fa fa-cog"></i> Filtrar
+            </button>
           </div>
+          <div className=""><Buscador verBuscador={verBuscador} /></div>
         </div>
-      )}
+
+
+       
+      </div> */}
 
 
 
@@ -107,7 +101,7 @@ export default function Splidecomponent() {
 
       {Object.keys(productosPorMarca).map((marca) => (
         // SECCION
-        <main key={marca} className="bg-white"
+        <main key={marca} className=" bg-gray-200"
           onClick={() => {
             if (menuVisible == true) {
               setMenuVisible(false);
@@ -120,6 +114,9 @@ export default function Splidecomponent() {
           </h6> {/* Título de la marca */}
           <Splide options={{
             type: "slide",
+            //autoplay: true,
+            //autoplaySpeed: 2000,
+            //pauseOnHover: true,
             perPage: 4,
             perMove: 1,
             gap: "0px",
@@ -144,6 +141,8 @@ export default function Splidecomponent() {
         </main>
         // END SECCION
       ))}
+
+
     </div>
   );
 }

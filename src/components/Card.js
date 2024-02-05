@@ -2,7 +2,7 @@ import ImageLoader from "@/app/item/ImageLoader";
 import { useProductos } from "@/context/Context";
 import Link from "next/link";
 function Card({ producto }) {
-  const { precioGanacia, precioVisible, isChecked } = useProductos();
+  const { precioGanacia, precioVisible, isChecked, visibleDetalles } = useProductos();
 
   const obtenerImagenUrl = () => {
     const imagen = Object.values(producto.imagenes).find(
@@ -40,7 +40,7 @@ function Card({ producto }) {
         <p className="mt-1 text-lg font-bold tracking-tight text-gray-900 sm:text-xl text-center ">
           {producto.nombre_linea || "Laptops"}
         </p>
-        <span className="font-medium text-gray-500 text-xs ml-5">
+        <span className="font-medium text-gray-500 text-xs ml-5 ">
           {producto.nombre_marca} SKU:{producto.id_producto}
 
 
@@ -68,20 +68,20 @@ function Card({ producto }) {
           {producto.nombre_marca}
         </small> */}
 
-        <div className="text-left w-full px-4 sm:px-10">
-          {/* <small className="my-3 top-5 left-4 text-xs font-bold ">
-            {producto.nombre_marca} SKU:{producto.id_producto}
-          </small> */}
+        <div className="text-left w-full px-2 sm:px-10 ">
+
+
           {/* Especificaciones del Producto */}
           {[
             "Procesador",
             "Memoria RAM",
-            "Unidad  solido (SSD)",
+            "Unidad de estado solido (SSD)",
             "Pantalla",
           ].map((cualidad, index) => (
             <div key={index}>
-              <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-2">
-                {cualidad}
+              <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-1 ">
+                {cualidad === 'Unidad de estado solido (SSD)' ? 'estado solido (SSD)' : cualidad}
+
               </h6>
               {Object.values(producto.especificacion).map((row, i) => {
                 return row.cualidad === cualidad ? (
@@ -94,7 +94,7 @@ function Card({ producto }) {
           ))}
         </div>
 
-        <div className="mt-3 flex flex-col items-center">
+        <div className="my-3 flex flex-col items-center">
           {isChecked ? (
             <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-0 card-info-element">
               Bs{" "}
@@ -107,13 +107,12 @@ function Card({ producto }) {
 
 
 
-          <span className="font-medium text-gray-500 text-xs ">
+          {/* <span className="font-medium text-gray-500 text-xs ">
             {producto.nombre_marca} SKU:{producto.id_producto}
-
-
-          </span>
+          </span> */}
         </div>
       </div>
+
     </div>
   );
 }

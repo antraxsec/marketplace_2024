@@ -168,7 +168,7 @@ export default function Page({ params }) {
                 errorCorrectionLevel: "M",
                 margin: 3,
                 scale: 4,
-                width: 100,
+                width: 80,
                 color: {
                   dark: "#000",
                   light: "#FFFF",
@@ -179,14 +179,14 @@ export default function Page({ params }) {
             {/* Contenedor para los textos */}
             <div className="flex flex-col">
               <div className="multilaptops-text">
-                <span className="color-one text-2xl font-bold">multi</span>
-                <span className="color-two text-2xl font-bold">laptops</span>
+                <span className="color-one text-1xl font-bold">multi</span>
+                <span className="color-two text-1xl font-bold">laptops</span>
               </div>
-              <h5 className=" text-lg font-bold tracking-tight text-gray-900">
+              <small className=" text-lg font-bold tracking-tight text-gray-900">
                 {producto.nombre_linea}{" "}
-              </h5>
-              <p className="text-md font-bold tracking-tight text-gray-400">
-                <small className=" top-5 left-4 text-xs font-bold bg-gray-900 p-1 text-white rounded">
+              </small>
+              <p className="text-sm font-bold tracking-tight text-gray-400">
+                <small className=" top-5 left-4 text-sm font-bold bg-gray-900 p-1 text-white rounded">
                   {producto.nombre_marca}
                 </small>  SKU: {producto.id_producto}
               </p>
@@ -194,12 +194,14 @@ export default function Page({ params }) {
           </div>
 
 
-          <div className=" p-4 ">
+          <div className=" p-2  ">
             {[
               "Procesador",
+              "Serie de procesador",
               "Memoria RAM",
               "Unidad de estado solido (SSD)",
               "Pantalla",
+              "Gráficos"
             ].map((cualidad, index) => (
               <div key={index} className="flex items-center py-1">
                 <div className="text-xl text-gray-900 pr-3">
@@ -225,7 +227,7 @@ export default function Page({ params }) {
             ))}
 
           </div>
-          <span className="font-medium text-gray-500 text-xs m-4">
+          <span className="font-medium text-gray-500 text-xs mb-2">
             {producto.nombre_marca} SKU:{producto.id_producto}
 
 
@@ -294,13 +296,13 @@ export default function Page({ params }) {
                     Number(producto.factor_avg)
                   ).toFixed(2)}
                 </span>
-                <span className="text-sm font-medium text-gray-500 line-through">
+                {/* <span className="text-sm font-medium text-gray-500 line-through">
                   Bs{" "}
                   {(
                     (Number(producto.costo_avg) + precioGanacia) *
                     Number(producto.factor_avg)
                   ).toFixed(2)}
-                </span>
+                </span> */}
               </>
             ) : null}
 
