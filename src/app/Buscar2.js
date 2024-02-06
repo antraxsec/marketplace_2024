@@ -91,19 +91,19 @@ export default function Buscar2() {
   };
 
   // Función para manejar el envío del formulario
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    //console.log('{}{}{}{}{}{}{}{}{}', selectedBrands)
-    //selectedProcessors.push(...selectedBrands)
-    /**
-     * gaardar en localStorage
-     */
-    //localStorage.setItem('criteria', JSON.stringify(searchCriteria));
-    // Aquí enviarías los criterios de búsqueda a tu lógica de filtrado
-    // handleSearch(selectedProcessors);
-    //console.log('entro', searchCriteria);
-    router.push('/item');
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   //console.log('{}{}{}{}{}{}{}{}{}', selectedBrands)
+  //   //selectedProcessors.push(...selectedBrands)
+  //   /**
+  //    * gaardar en localStorage
+  //    */
+  //   //localStorage.setItem('criteria', JSON.stringify(searchCriteria));
+  //   // Aquí enviarías los criterios de búsqueda a tu lógica de filtrado
+  //   // handleSearch(selectedProcessors);
+  //   //console.log('entro', searchCriteria);
+  //   router.push('/item');
+  // };
 
   /**
    *Buscar
@@ -330,7 +330,7 @@ export default function Buscar2() {
 
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto my-8">
+    <div className="max-w-2xl mx-auto my-8">
       <div className="flex justify-center mt-6">
         <p className="text-2xl font-bold text-gray-900 sm:text-3xl mb-3 ">
           Multilaptops
@@ -446,7 +446,7 @@ export default function Buscar2() {
           </button>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 

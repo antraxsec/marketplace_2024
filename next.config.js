@@ -1,8 +1,12 @@
 /////////1//////
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
 
-module.exports = nextConfig
+const nextConfig = {
+    reactStrictMode: true,
+    output: 'standalone',
+};
+
+module.exports = nextConfig;
 
 ////////2////////////
 // const runtimeCaching = require("next-pwa/cache");

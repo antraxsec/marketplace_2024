@@ -1,10 +1,12 @@
-"use client"
-import { useEffect, useState } from "react";
+// "use client"
+// import { useEffect, useState } from "react";
 import Splidecomponent from "./Splidecomponent";
 import MultiLaptops3D from "./MultiLaptops3D";
+
+
 const MainComponent = () => {
-  const [activo, setActivo] = useState(true);
-  const tiempoInactividad = 9000; // 5 segundos para ejemplo
+  // const [activo, setActivo] = useState(true);
+  // const tiempoInactividad = 9000; // 5 segundos para ejemplo
 
   // useEffect(() => {
   //   // Funciones para manejar los eventos
@@ -36,10 +38,11 @@ const MainComponent = () => {
   // }, [tiempoInactividad]);
   return (
     <div className=''>
-      {activo ? (<Splidecomponent />) : (<MultiLaptops3D />)}
-
+      {/* {activo ? (<Splidecomponent />) : (<MultiLaptops3D />)} */}
+      <Splidecomponent />
     </div>
   );
 };
 
 export default MainComponent;
+
