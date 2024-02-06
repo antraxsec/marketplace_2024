@@ -1,44 +1,57 @@
-// "use client";
-// import React, { useEffect, useState } from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/splide/dist/css/splide.min.css";
-import Modal from 'react-modal';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-
-// Importa los iconos que necesitas
-import { AiOutlineHeart } from "react-icons/ai";
-import { loadFontAwesome } from "@/app/services/fontawesome";
-import { useRouter } from "next/navigation";
-import { useProductos } from "@/context/Context";
-import { useQRCode } from "next-qrcode";
-import Loading from "@/components/Loading";
-
+import api from "../../api";
 
 export async function getStaticPaths() {
   // Suponiendo que `fetchProductos` es una función que obtiene los productos desde un API o base de datos
-  const { productos } = useProductos(); // Debes crear esta función según tu backend
-  const paths = productos.map(producto => ({
+  const productos = await api.productos(); // Debes crear esta función según tu backend
+  const paths = productos.map((producto) => ({
     params: { id: producto.id_producto.toString() }, // Asegúrate de que los IDs son strings
   }));
-
   return { paths, fallback: false }; // O `true` o `'blocking'` si quieres usar ISR o SSR para rutas no generadas
 }
 
-export default function Page({ params }) {
-  return (<>
-    hola
-  </>)
+export default async function page({ params: { id } }) {
+  const producto = await api.producto(id);
+  console.log("producto ", producto);
+  console.log(id);
+  return <div>page</div>;
 }
+
+//---------------------------------------------------------------------------------------------------
+// // "use client";
+// // import React, { useEffect, useState } from "react";
+// import { Splide, SplideSlide } from "@splidejs/react-splide";
+// import "@splidejs/splide/dist/css/splide.min.css";
+// import Modal from 'react-modal';
+// import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+
+// // Importa los iconos que necesitas
+// import { AiOutlineHeart } from "react-icons/ai";
+// import { loadFontAwesome } from "@/app/services/fontawesome";
+// import { useRouter } from "next/navigation";
+// import { useProductos } from "@/context/Context";
+// import { useQRCode } from "next-qrcode";
+// import Loading from "@/components/Loading";
+
+// // export async function getStaticPaths() {
+// //   // Suponiendo que `fetchProductos` es una función que obtiene los productos desde un API o base de datos
+// //   const { productos } = useProductos(); // Debes crear esta función según tu backend
+// //   const paths = productos.map(producto => ({
+// //     params: { id: producto.id_producto.toString() }, // Asegúrate de que los IDs son strings
+// //   }));
+
+// //   return { paths, fallback: false }; // O `true` o `'blocking'` si quieres usar ISR o SSR para rutas no generadas
+// // }
+
+// // export default function Page({ params }) {
+// //   return (<>
+// //     hola
+// //   </>)
+// // }
 // export default function Page({ params }) {
 //   const router = useRouter();
 //   const { Canvas } = useQRCode();
 
-
-
-
-
 //   const { productos, precioGanacia, isChecked } = useProductos();
-
 
 //   const [producto, setProducto] = useState({});
 //   const [encontrado, setEncontrado] = useState(false);
@@ -117,7 +130,6 @@ export default function Page({ params }) {
 //       : mainImage || `https://multilaptops.net/recursos/imagenes/productos/sin_imagen.webp`;
 //   };
 
-
 //   if (!encontrado) {
 //     // console.log(" prodictos = nuevo ver dos", producto);
 //     return (
@@ -181,7 +193,6 @@ export default function Page({ params }) {
 //         </div>
 //         <div className="flex flex-col justify-center p-6  h-full">
 
-
 //           <div className="flex items-center space-x-4">
 //             {/* Componente Canvas */}
 //             <Canvas
@@ -214,7 +225,6 @@ export default function Page({ params }) {
 //               </p>
 //             </div>
 //           </div>
-
 
 //           <div className=" p-2  ">
 //             {[
@@ -251,7 +261,6 @@ export default function Page({ params }) {
 //           </div>
 //           <span className="font-medium text-gray-500 text-xs mb-2">
 //             {producto.nombre_marca} SKU:{producto.id_producto}
-
 
 //             <div class="flex items-center">
 //               <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -357,4 +366,3 @@ export default function Page({ params }) {
 //     </div>
 //   );
 // }
-
