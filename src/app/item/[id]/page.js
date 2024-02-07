@@ -12,10 +12,11 @@ export async function getStaticPaths() {
 
 export default async function page({ params: { id } }) {
   const producto = await api.producto(id);
-  console.log("producto ", producto);
-  console.log(id);
-  return <div className="flex justify-center items-center w-full h-screen">
-    <Cuerpoitemid producto={producto} />
-  </div>;
+
+  return (
+    <div className="flex justify-center items-center w-full h-screen">
+      <Cuerpoitemid producto={producto} />
+    </div>
+  );
 }
 
