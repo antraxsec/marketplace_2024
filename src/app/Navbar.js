@@ -2,6 +2,7 @@
 import Buscador from '@/components/Buscador';
 import React, { useState } from 'react';
 import Checketdos from './administrador/Checketdos';
+import Checket from './administrador/Checket';
 
 // import { SearchIcon, BellIcon } from '@heroicons/react/outline';
 
@@ -11,7 +12,7 @@ const Navbar = ({ setMenuVisible }) => {
 
 
     return (
-        <nav className="bg-gray-100 text-white shadow-md">
+        <nav className="bg-gray-100 text-white shadow-md fixed w-full   left-1/2 transform -translate-x-1/2 z-50 ">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
                 <div className="flex justify-between h-16 ">
                     <div className="flex">
@@ -36,7 +37,8 @@ const Navbar = ({ setMenuVisible }) => {
 
                         </form>
                         .
-
+                        <Checket />
+                        .
                         <Checketdos />
                     </div>
                 </div>

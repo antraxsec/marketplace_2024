@@ -89,7 +89,7 @@ export default function Splidecomponent() {
       {/* Menú de filtros */}
       <div
         className={`transform transition-all ease-in-out duration-500 z-50 scrollbar menu-transparente ${menuVisible ? "translate-x-0 opacity-100" : "-translate-x-full opacity-100"
-          } w-64 bg-gray-100 p-4 fixed inset-y-0 left-0  overflow-y-auto`}
+          } w-64 bg-white p-4 fixed inset-y-0 left-0  overflow-y-auto`}
       >
         <Buscar2 />
         {/* ... Resto de tu contenido ... */}
@@ -101,7 +101,7 @@ export default function Splidecomponent() {
 
       {Object.keys(productosPorMarca).map((marca) => (
         // SECCION
-        <main key={marca} className=" bg-gray-200"
+        <main key={marca} className=" bg-gray-200 px-2"
           onClick={() => {
             if (menuVisible == true) {
               setMenuVisible(false);
@@ -126,35 +126,35 @@ export default function Splidecomponent() {
             gap: 10,
             padding: 5,
             breakpoints: {
-                420: {
-                    perPage: 1
-                },
-                640: {
-                    perPage: 1
-                },
-                768: {
-                    perPage: 2
-                },
-                991: {
-                    perPage: 2
-                },
-                1024: {
-                    perPage: 2
-                },
-                1200: {
-                    perPage: 2
-                },
-                1440: {
-                    perPage: 3
-                },
-                1600: {
-                    perPage: 4
-                },
-                1920: {
-                    perPage: 4
-                }
+              420: {
+                perPage: 1
+              },
+              640: {
+                perPage: 1
+              },
+              768: {
+                perPage: 2
+              },
+              991: {
+                perPage: 2
+              },
+              1024: {
+                perPage: 2
+              },
+              1200: {
+                perPage: 2
+              },
+              1440: {
+                perPage: 3
+              },
+              1600: {
+                perPage: 4
+              },
+              1920: {
+                perPage: 4
+              }
 
-          }
+            }
           }}>
             {productosPorMarca[marca].slice(0, 30).map((producto) => (
               <SplideSlide key={producto.id_producto}>

@@ -7,10 +7,10 @@ export default function Buscador({ verBuscador }) {
     const { productos, filtrar } = useProductos();
     const inputRef = useRef(null);
 
-    useEffect(() => {
-        // Enfocar el campo de búsqueda cuando el componente se monta
-        inputRef.current.focus();
-    }, []);
+    // useEffect(() => {
+    //     // Enfocar el campo de búsqueda cuando el componente se monta
+    //     inputRef.current.focus();
+    // }, []);
 
     const handleSearchChange = (e) => {
         const term = e.target.value.toLowerCase();
