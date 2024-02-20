@@ -15,9 +15,10 @@ export const ProductosProvider = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
   const [precioGanacia, setPrecioGanancia] = useState(90);
+  const [tipoMoneda, setTipoMoneda] = useState(1)
   const [precioVisible, setPrecioVisible] = useState(true);
   const [isChecked, setIsChecked] = useState(true);
-  const [visibleDetalles, setVisibleDetalles] = useState(true)
+  const [visibleDetalles, setVisibleDetalles] = useState(false)
 
   // Función para guardar en localStorage
   const guardarEnLocalStorage = (key, value) => {
@@ -32,28 +33,40 @@ export const ProductosProvider = ({ children }) => {
   const fetchProducto = async () => {
     setIsLoaded(false);
     try {
-      const response = await fetch("https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G");
+      const response = await fetch("https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G", { cache: "no-store" });
       const data = await response.json();
       let datosnew = Object.values(data.datos);
       setProductos(datosnew);
-
+      setProductosFiltrados(datosnew)
+      setIsLoaded(true);
+      guardarEnLocalStorage('productos', datosnew)
+      return datosnew
     } catch (error) {
       console.error("Error al cargar datos:", error);
     }
     setIsLoaded(true);
   };
-
-
-
-
-
-
-
   // Efecto para cargar productos y recuperar productos filtrados al iniciar
   useEffect(() => {
-    fetchProducto();
+    if (recuperarDeLocalStorage('productos') === null) {
+      console.log('entro fech', productos.length)
+      fetchProducto();
+    } else {
+      console.log('recupero',)
+      setProductos(recuperarDeLocalStorage('productos'))
+      setIsLoaded(true);
+    }
 
+    //precio recuperar - moneda
+    setPrecioGanancia(recuperarDeLocalStorage('precio'))
+    setTipoMoneda(recuperarDeLocalStorage('tipo'))
+    setIsChecked(recuperarDeLocalStorage('verprecio'))
     //setProductosFiltrados(recuperarDeLocalStorage('productosFiltrados') || []);
+
+    /**
+     * Actualizar datos del fectch
+     */
+    //actaulizarData()
   }, []);
 
 
@@ -73,6 +86,7 @@ export const ProductosProvider = ({ children }) => {
   };
 
   const verPrecio = (data) => {
+
     setPrecioVisible(data);
   };
 
@@ -81,10 +95,16 @@ export const ProductosProvider = ({ children }) => {
   };
 
   const mostrarPrecio = () => {
+    localStorage.setItem('verprecio', JSON.stringify(!isChecked));
     setIsChecked(!isChecked)
   }
   const mostrarDetalles = () => {
     setVisibleDetalles(!visibleDetalles)
+  }
+
+  const actaulizarData = async () => {
+    await fetchProducto()
+    alert('actualizado data')
   }
 
   // Mandar datos
@@ -101,7 +121,11 @@ export const ProductosProvider = ({ children }) => {
       mostrarPrecio,
       isChecked,
       visibleDetalles,
-      mostrarDetalles
+      mostrarDetalles,
+      setPrecioGanancia,
+      setTipoMoneda,
+      tipoMoneda,
+      actaulizarData
     }}>
       {children}
     </ProductosContext.Provider>

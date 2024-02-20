@@ -6,6 +6,7 @@ const api = {
       );
       const data = await response.json();
       let datosnew = Object.values(data.datos);
+      //  console.log('uno', datosnew)
       return datosnew;
     } catch (error) {
       console.error("Error al cargar datos:", error);
@@ -23,6 +24,7 @@ const api = {
       const resultado = datosnew.find(
         (producto) => producto.id_producto === id
       );
+      //console.log('Unico', resultado)
       return resultado; // Asegúrate de retornar el resultado después de encontrarlo
     } catch (error) {
       console.error("Error al cargar datos del producto:", error);

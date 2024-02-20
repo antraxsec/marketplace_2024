@@ -1,10 +1,9 @@
 import { useProductos } from '@/context/Context'
-import React, { useState } from 'react'
+
 
 export default function Checketdos() {
-    const { productos, isLoaded, productosFiltrados, visibleDetalles, mostrarDetalles } = useProductos()
-    // visibleDetalles,
-    //     mostrarDetalles
+    const { visibleDetalles, mostrarDetalles } = useProductos()
+
 
     return (
         <label className="relative inline-flex items-center cursor-pointer ">

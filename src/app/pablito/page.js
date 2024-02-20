@@ -1,10 +1,30 @@
-import api from "../api";
-
+"use client"
+//import api from "../api";
+import { Modal, Button } from "flowbite-react";
+import { useState } from "react";
 export default async function page() {
-    const productos = await api.productos();
-    console.log(productos);
+    // const productos = await api.productos();
+    //console.log(productos);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleOpenModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
     return <div>
-        holas
+        <Button onClick={handleOpenModal}>Abrir Modal</Button>
+
+        <Modal show={showModal} onClose={handleCloseModal}>
+            <Modal.Header>
+                <Modal.Title>Título del Modal</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                Contenido del modal, puede ser texto, imágenes, formularios, etc.
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button onClick={handleCloseModal}>Cerrar Modal</Button>
+            </Modal.Footer>
+        </Modal>
     </div>;
 }
 

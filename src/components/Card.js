@@ -1,8 +1,8 @@
-import ImageLoader from "@/app/item/ImageLoader";
+
 import { useProductos } from "@/context/Context";
 import Link from "next/link";
 function Card({ producto }) {
-  const { precioGanacia, precioVisible, isChecked, visibleDetalles } = useProductos();
+  const { precioGanacia, tipoMoneda, isChecked } = useProductos();
 
   const obtenerImagenUrl = () => {
     const imagen = Object.values(producto.imagenes).find(
@@ -23,74 +23,78 @@ function Card({ producto }) {
   }
 
   return (
-    <div className="bg-gray-100 rounded-3xl border border-gray-100 h-full"> {/* shadow-sm flex flex-col items-center p-2 sm:max-w-sm h-[500px] card-hover */}
-      <Link href={`/item/${producto.id_producto}`}>
+    <Link href={`/item/${producto.id_producto}`}>
+
+      <div className="bg-gray-100 rounded-3xl border border-gray-100 h-full shadow-lg"> {/* Ajustes visuales */}
+
         <img
-          className="w-full h-48 object-contain sombra-png"
+          className="w-full h-48 object-contain rounded-t-xl" // Borde redondeado superior
           src={obtenerImagenUrl()}
           alt="Producto"
         />
-        {/* <ImageLoader
-          className="w-full mt-1 object-cover h-48 sm:h-48 md:h-64 lg:h-auto"
-          src={obtenerImagenUrl()}
-          alt="Laptop"
-        /> */}
-      </Link>
-      <div className="flex flex-col justify-between flex-grow w-full">
-        <p className="mt-1 text-lg font-bold tracking-tight text-gray-900 sm:text-xl text-left ps-2">
-        {producto.nombre_marca} {producto.nombre_linea} {producto.id_producto}
-        </p>
-        <hr className="my-2"></hr>
-        {/* <small className="absolute top-5 left-4 text-xs font-bold bg-gray-900 p-1 text-white rounded">
-          {producto.nombre_marca}
-        </small> */}
 
-        <div className="text-left w-full px-2 sm:px-10 ">
+        <div className="flex flex-col justify-between flex-grow w-full">
+          <p className="mx-3 mt-1 text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-gray-900 text-left px-2 sm:px-4 md:px-6">
+            {producto.nombre_marca} {producto.nombre_linea} {producto.id_producto}
+          </p>
+          <hr className="my-2"></hr>
 
+          <div className="text-left w-full px-2 sm:px-4 md:px-6 mx-3">
 
-          {/* Especificaciones del Producto */}
-          {[
-            "Procesador",
-            "Memoria RAM",
-            "Unidad de estado solido (SSD)",
-            "Pantalla",
-          ].map((cualidad, index) => (
-            <div key={index}>
-              <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-1 ">
-                {cualidad === 'Unidad de estado solido (SSD)' ? 'estado solido (SSD)' : cualidad}
+            {/* Especificaciones del Producto */}
+            {[
+              "Procesador",
+              "Memoria RAM",
+              "Unidad de estado solido (SSD)",
+              "Pantalla",
+            ].map((cualidad, index) => (
+              <div key={index}>
+                <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-1 ">
+                  {cualidad === 'Unidad de estado solido (SSD)' ? 'estado solido (SSD)' : cualidad}
 
-              </h6>
-              {Object.values(producto.especificacion).map((row, i) => {
-                return row.cualidad === cualidad ? (
-                  <p key={i} className="text-gray-700">
-                    {getFourWords(row.referencia_esp)}
-                  </p>
-                ) : null;
-              })}
-            </div>
-          ))}
-        </div>
+                </h6>
+                {Object.values(producto.especificacion).map((row, i) => {
+                  return row.cualidad === cualidad ? (
+                    <p key={i} className="text-gray-700">
+                      {getFourWords(row.referencia_esp)}
+                    </p>
+                  ) : null;
+                })}
+              </div>
+            ))}
+            {/* Tus mapeos y lógica aquí */}
+          </div>
 
-        <div className="my-4 flex flex-col items-center">
-          {isChecked ? (
-            <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-0 card-info-element">
-              Bs{" "}
-              {(
-                (Number(producto.costo_avg) + precioGanacia) *
-                Number(producto.factor_avg)
-              ).toFixed(2)}
-            </span>
-          ) : null}
+          <div className="my-2 sm:my-3 md:my-4 flex flex-col items-center">
+            {/* Precio y lógica aquí */}
+            {isChecked ? (
+              tipoMoneda == 1 ? (
+                <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-0 card-info-element">
+                  Bs{" "}
+                  {(
+                    (Number(producto.costo_avg) * Number(producto.factor_avg)) + precioGanacia
+                  ).toFixed(2)}
+                </span>
+              ) : (
+                <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-0 card-info-element">
+                  Bs{" "}
+                  {(
+                    (Number(producto.costo_avg) + precioGanacia) *
+                    Number(producto.factor_avg)
+                  ).toFixed(2)}
+                </span>
+              )
 
-
-
-          {/* <span className="font-medium text-gray-500 text-xs ">
-            {producto.nombre_marca} SKU:{producto.id_producto}
-          </span> */}
+            ) : null}
+          </div>
         </div>
       </div>
 
-    </div>
+
+
+
+
+    </Link>
   );
 }
 

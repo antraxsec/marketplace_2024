@@ -4,6 +4,9 @@
 const nextConfig = {
     reactStrictMode: true,
     output: 'standalone',
+    experimental: {
+        ppr: false
+    }
 };
 
 module.exports = nextConfig;
