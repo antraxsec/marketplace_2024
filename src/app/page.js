@@ -6,8 +6,8 @@ import Buscar from './Buscar';
 export default function Home() {
 
   return (
-    <div >
+    <div className=" ">
       <Buscar />
     </div>
-  )
+  );
 }

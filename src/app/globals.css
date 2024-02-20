@@ -84,3 +84,20 @@
     background-color: rgba(0, 0, 0, 0.7);
 
 } */
+
+/* card producto */
+.card .product{
+    height: 85%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+}
+.product .number{
+    font-size: 80px;
+    line-height: 80px;
+    font-style: italic;
+    opacity: 0.25;
+}

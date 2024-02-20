@@ -3,7 +3,7 @@ import Splidecomponent from "./Splidecomponent";
 
 const MainComponent = () => {
   return (
-    <div className='bg-gray-500 '>
+    <div className="">
       <Splidecomponent />
     </div>
   );

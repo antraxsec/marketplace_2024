@@ -24,23 +24,22 @@ function Card({ producto }) {
 
   return (
     <Link href={`/item/${producto.id_producto}`}>
-
-      <div className="bg-gray-100 rounded-3xl border border-gray-100 h-full shadow-lg"> {/* Ajustes visuales */}
-
+      <div className="bg-white rounded-3xl border border-gray-50 h-full shadow-lg  ">
+        {" "}
+        {/* Ajustes visuales */}
         <img
           className="w-full h-48 object-contain rounded-t-xl" // Borde redondeado superior
           src={obtenerImagenUrl()}
           alt="Producto"
         />
-
         <div className="flex flex-col justify-between flex-grow w-full">
           <p className="mx-3 mt-1 text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-gray-900 text-left px-2 sm:px-4 md:px-6">
-            {producto.nombre_marca} {producto.nombre_linea} {producto.id_producto}
+            {producto.nombre_marca} {producto.nombre_linea}{" "}
+            {producto.id_producto}
           </p>
           <hr className="my-2"></hr>
 
           <div className="text-left w-full px-2 sm:px-4 md:px-6 mx-3">
-
             {/* Especificaciones del Producto */}
             {[
               "Procesador",
@@ -50,8 +49,9 @@ function Card({ producto }) {
             ].map((cualidad, index) => (
               <div key={index}>
                 <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-1 ">
-                  {cualidad === 'Unidad de estado solido (SSD)' ? 'estado solido (SSD)' : cualidad}
-
+                  {cualidad === "Unidad de estado solido (SSD)"
+                    ? "estado solido (SSD)"
+                    : cualidad}
                 </h6>
                 {Object.values(producto.especificacion).map((row, i) => {
                   return row.cualidad === cualidad ? (
@@ -72,7 +72,8 @@ function Card({ producto }) {
                 <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-0 card-info-element">
                   Bs{" "}
                   {(
-                    (Number(producto.costo_avg) * Number(producto.factor_avg)) + precioGanacia
+                    Number(producto.costo_avg) * Number(producto.factor_avg) +
+                    precioGanacia
                   ).toFixed(2)}
                 </span>
               ) : (
@@ -84,16 +85,10 @@ function Card({ producto }) {
                   ).toFixed(2)}
                 </span>
               )
-
             ) : null}
           </div>
         </div>
       </div>
-
-
-
-
-
     </Link>
   );
 }
