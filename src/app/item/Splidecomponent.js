@@ -40,9 +40,8 @@ export default function Splidecomponent() {
   }
   return (
     <div
-      className={`relative ${
-        visibleDetalles ? "bg-gray-100 bg-opacity-50" : "bg-gray-100"
-      }`}
+      className={`relative ${visibleDetalles ? "bg-gray-100 bg-opacity-50" : "bg-gray-100"
+        }`}
     >
       {/* Overlay */}
       {visibleDetalles && (
@@ -57,9 +56,8 @@ export default function Splidecomponent() {
       {/* Sidebar aquí */}
       <div
         id="drawer-navigation"
-        className={`fixed transform top-0 z-50 p-4 inset-y-0 left-0 overflow-y-auto transition-all ease-in-out duration-500 ${
-          visibleDetalles ? "translate-x-0" : "-translate-x-full"
-        } w-64 bg-white`}
+        className={`fixed transform top-0 z-50 p-4 inset-y-0 left-0 overflow-y-auto transition-all ease-in-out duration-500 ${visibleDetalles ? "translate-x-0" : "-translate-x-full"
+          } w-64 bg-white`}
       >
         <Buscar2 />
         {/* Resto del contenido del sidebar */}
@@ -67,12 +65,16 @@ export default function Splidecomponent() {
 
       {/* El resto de tu página aquí, asegúrate de agregar un z-index menor al overlay si es necesario */}
       <div
-        className={`transition-opacity duration-500 ${
-          visibleDetalles ? "opacity-50" : "opacity-100"
-        }`}
+        className={`transition-opacity duration-500 ${visibleDetalles ? "opacity-50" : "opacity-100"
+          }`}
       >
+
+        <br />
+        <br />
+        <br />
         {Object.keys(productosPorMarca).map((marca) => (
           // SECCION
+
           <main
             key={marca}
             className="  px-2 "
@@ -82,6 +84,7 @@ export default function Splidecomponent() {
               }
             }}
           >
+
             <h6 className="mx-6 text-2xl font-bold text-gray-900 py-2 ">
               {marca}
             </h6>

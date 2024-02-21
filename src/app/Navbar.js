@@ -15,22 +15,26 @@ const Navbar = () => {
 
     return (
         <nav className="bg-gray-100 text-white shadow-md fixed w-full   left-1/2 transform -translate-x-1/2 z-50 ">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-1">
+                {/* <div className="flex items-center space-x-3 rtl:space-x-reverse">
                     <div className="flex">
                         <div className="flex-shrink-0 flex items-center">
-                            <img className="h-5 w-50" src="https://multilaptops.net/recursos/imagenes/favicon/logo_full.png" alt="Logo" onClick={() => router.push("/precios")} />
+                            <img className="" src="https://multilaptops.net/recursos/imagenes/favicon/ml_favicon2.png" alt="Logo" onClick={() => router.push("/precios")} />
                         </div>
                     </div>
 
+                </div> */}
+                <div className=''>
+                    <Buscador />
                 </div>
                 <div>
                     <Checket />
                 </div>
                 <div>
-                    <small onClick={() => {
+
+                    <li onClick={() => {
                         mostrarDetalles()
-                    }} className='text-gray-900'>Filtrar</small>
+                    }} className='text-gray-900 flex items-center font-medium'><i class="fa fa-search" aria-hidden="true"></i> </li>
                 </div>
 
 
@@ -64,9 +68,7 @@ const Navbar = () => {
                             </Link>
                         </li>
 
-                        <li>
-                            <Buscador />
-                        </li>
+
                     </ul>
                 </div>
             </div>
