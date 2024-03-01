@@ -3,16 +3,15 @@ import Nav from './Nav';
 import Aside from './Aside';
 import Secctions from './Secctions';
 
+
 export default function page() {
-    return (
-
-        <div className=''>
-
-            <Nav />
-            <Aside />
-            <Secctions />
-        </div>
-    )
+  return (
+    <div className="">
+      <Nav />
+      <Aside />
+      <Secctions />
+    </div>
+  );
 }
 
 

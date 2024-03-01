@@ -15,13 +15,15 @@ export const ProductosProvider = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
   const [precioGanacia, setPrecioGanancia] = useState(90);
-  const [tipoMoneda, setTipoMoneda] = useState(1)
+  const [tipoMoneda, setTipoMoneda] = useState(1);
   const [precioVisible, setPrecioVisible] = useState(true);
   const [isChecked, setIsChecked] = useState(true);
-  const [visibleDetalles, setVisibleDetalles] = useState(false)
-  const [producto, setProducto] = useState({})
-  const [verproducto, setVerproducto] = useState(false)
-  const [configPrecio, setConfigPrecio] = useState({})//configuracion de precio
+  const [visibleDetalles, setVisibleDetalles] = useState(false);
+  const [producto, setProducto] = useState({});
+  const [verproducto, setVerproducto] = useState(false);
+  const [configPrecio, setConfigPrecio] = useState({}); //configuracion de precio
+  const [cpo, setCpo] = useState(false); //para mostrar la configuracion del precio
+  const [mostrarslider, setMostrarslider] = useState(false);
 
   // Función para guardar en localStorage
   const guardarEnLocalStorage = (key, value) => {
@@ -53,18 +55,21 @@ export const ProductosProvider = ({ children }) => {
   //nuevo funcional
   const fetchProducto = async () => {
     try {
-      const response = await fetch("https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G", { cache: "no-store" });
+      const response = await fetch(
+        "https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G",
+        { cache: "no-store" }
+      );
       const data = await response.json();
       let datosNuevos = Object.values(data.datos);
       // console.log(datosNuevos)
-      const datosAlmacenados = recuperarDeLocalStorage('productos');
+      const datosAlmacenados = recuperarDeLocalStorage("productos");
       // Comparamos los datos nuevos con los almacenados
       if (JSON.stringify(datosNuevos) !== JSON.stringify(datosAlmacenados)) {
         console.log("Actualizando datos...");
 
         setProductos(datosNuevos);
-        guardarEnLocalStorage('productos', datosNuevos);
-        setProductosFiltrados(datosNuevos)
+        guardarEnLocalStorage("productos", datosNuevos);
+        setProductosFiltrados(datosNuevos);
         setIsLoaded(true);
       } else {
         console.log("Los datos no han cambiado, no se requiere actualización.");
@@ -74,24 +79,22 @@ export const ProductosProvider = ({ children }) => {
     }
   };
 
-
   // Efecto para cargar productos y recuperar productos filtrados al iniciar
   useEffect(() => {
-    const productosLocales = recuperarDeLocalStorage('productos');
+    const productosLocales = recuperarDeLocalStorage("productos");
     if (productosLocales) {
-      setProductosFiltrados(productosLocales)
+      setProductosFiltrados(productosLocales);
       setProductos(productosLocales);
       setIsLoaded(true);
     }
     fetchProducto(); // Siempre se llama, pero actualiza solo si hay cambios.
     // Asumiendo que tienes lógica similar para precioGanancia, tipoMoneda, etc.
 
-
     //precio recuperar - moneda
-    setPrecioGanancia(recuperarDeLocalStorage('precio'))
-    setTipoMoneda(recuperarDeLocalStorage('tipo'))
-    setIsChecked(recuperarDeLocalStorage('verprecio'))
-    setConfigPrecio(recuperarDeLocalStorage('config-precio'))
+    setPrecioGanancia(recuperarDeLocalStorage("precio"));
+    setTipoMoneda(recuperarDeLocalStorage("tipo"));
+    setIsChecked(recuperarDeLocalStorage("verprecio"));
+    setConfigPrecio(recuperarDeLocalStorage("config-precio"));
     //setProductosFiltrados(recuperarDeLocalStorage('productosFiltrados') || []);
 
     /**
@@ -99,8 +102,6 @@ export const ProductosProvider = ({ children }) => {
      */
     //actaulizarData()
   }, []);
-
-
 
   // Efecto para guardar productos filtrados en localStorage cuando cambian
   // useEffect(() => {
@@ -112,12 +113,11 @@ export const ProductosProvider = ({ children }) => {
   // }, [productosFiltrados]);
 
   const filtrar = (data) => {
-    guardarEnLocalStorage('productosFiltrados', data);
+    guardarEnLocalStorage("productosFiltrados", data);
     setProductosFiltrados(data);
   };
 
   const verPrecio = (data) => {
-
     setPrecioVisible(data);
   };
 
@@ -126,23 +126,22 @@ export const ProductosProvider = ({ children }) => {
   };
 
   const mostrarPrecio = () => {
-    localStorage.setItem('verprecio', JSON.stringify(!isChecked));
-    setIsChecked(!isChecked)
-  }
+    localStorage.setItem("verprecio", JSON.stringify(!isChecked));
+    setIsChecked(!isChecked);
+  };
   const mostrarDetalles = () => {
-    setVisibleDetalles(!visibleDetalles)
-  }
+    setVisibleDetalles(!visibleDetalles);
+  };
 
   const actaulizarData = async () => {
-    await fetchProducto()
-    alert('actualizado data')
-  }
+    await fetchProducto();
+    alert("actualizado data");
+  };
 
   // Mandar datos
   const precioConfigurado = (factor_avg, costo_avg, precio_config) => {
-
     if (!configPrecio) {
-      return 'Sin Configurar';
+      return "Sin Configurar";
     }
 
     // Convertir a números
@@ -152,60 +151,66 @@ export const ProductosProvider = ({ children }) => {
     if (configPrecio.margen) configPrecio.margen = Number(configPrecio.margen);
 
     if (precio_config && precio_config.length > 0) {
-      return `${precio_config[0].simbolo_moneda} ${Number(precio_config[0].valor_precio).toFixed(2)}`;
+      return `${precio_config[0].simbolo_moneda} ${Number(
+        precio_config[0].valor_precio
+      ).toFixed(2)}`;
     } else {
-      if (configPrecio.tipoPrecio === 'fijo') {
-        if (configPrecio.moneda === 'dolares') {
-          let precioFin = (configPrecio.tc * costo_avg) + (configPrecio.tc * configPrecio.margen);
+      if (configPrecio.tipoPrecio === "fijo") {
+        if (configPrecio.moneda === "dolares") {
+          let precioFin =
+            configPrecio.tc * costo_avg + configPrecio.tc * configPrecio.margen;
           return `Bs ${precioFin.toFixed(2)}`;
-        } else if (configPrecio.moneda === 'bolivianos') {
-          let precioFin = (configPrecio.tc * costo_avg) + configPrecio.margen;
+        } else if (configPrecio.moneda === "bolivianos") {
+          let precioFin = configPrecio.tc * costo_avg + configPrecio.margen;
           return `Bs ${precioFin.toFixed(2)}`;
         }
-      } else if (configPrecio.tipoPrecio === 'dinamico') {
-        if (configPrecio.moneda === 'dolares') {
-          let precioFin = (costo_avg * factor_avg) + (factor_avg * configPrecio.margen);
+      } else if (configPrecio.tipoPrecio === "dinamico") {
+        if (configPrecio.moneda === "dolares") {
+          let precioFin =
+            costo_avg * factor_avg + factor_avg * configPrecio.margen;
           return `Bs ${precioFin.toFixed(2)}`;
-        } else if (configPrecio.moneda === 'bolivianos') {
-          let precioFin = (costo_avg * factor_avg) + configPrecio.margen;
+        } else if (configPrecio.moneda === "bolivianos") {
+          let precioFin = costo_avg * factor_avg + configPrecio.margen;
           return `Bs ${precioFin.toFixed(2)}`;
         }
       } else {
-        return 'Sin precio';
+        return "Sin precio";
       }
     }
-  }
-
-
-
-
+  };
 
   return (
-    <ProductosContext.Provider value={{
-      productos,
-      isLoaded,
-      productosFiltrados,
-      precioGanacia,
-      filtrar,
-      verPrecio,
-      preciosG,
-      precioVisible,
-      mostrarPrecio,
-      isChecked,
-      visibleDetalles,
-      mostrarDetalles,
-      setPrecioGanancia,
-      setTipoMoneda,
-      tipoMoneda,
-      actaulizarData,
-      setProducto,
-      producto,
-      setVerproducto,
-      verproducto,
-      configPrecio,
-      setConfigPrecio,
-      precioConfigurado
-    }}>
+    <ProductosContext.Provider
+      value={{
+        productos,
+        isLoaded,
+        productosFiltrados,
+        precioGanacia,
+        filtrar,
+        verPrecio,
+        preciosG,
+        precioVisible,
+        mostrarPrecio,
+        isChecked,
+        visibleDetalles,
+        mostrarDetalles,
+        setPrecioGanancia,
+        setTipoMoneda,
+        tipoMoneda,
+        actaulizarData,
+        setProducto,
+        producto,
+        setVerproducto,
+        verproducto,
+        configPrecio,
+        setConfigPrecio,
+        precioConfigurado,
+        setCpo,
+        cpo,
+        mostrarslider,
+        setMostrarslider,
+      }}
+    >
       {children}
     </ProductosContext.Provider>
   );
