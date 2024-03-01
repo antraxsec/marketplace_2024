@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import React, { useEffect, useState } from "react"
 import "@splidejs/splide/dist/css/splide.min.css";
 
 import Card from "@/components/Card";
@@ -9,13 +8,13 @@ import Buscar2 from "../Buscar2";
 import Loading from "@/components/Loading";
 import { loadFontAwesome } from "../services/fontawesome";
 import Navbar from "../Navbar";
+import Modal from "@/components/Modal";
 
 export default function Splidecomponent() {
-  const { isLoaded, productosFiltrados, visibleDetalles, mostrarDetalles } = useProductos()
+  const { isLoaded, productosFiltrados, visibleDetalles, mostrarDetalles, setVerproducto, verproducto } = useProductos()
   // console.log('productos', productosFiltrados)
 
   const [productosPorMarca, setProductosPorMarca] = useState({});
-
 
   useEffect(() => {
     const agruparPorMarca = productosFiltrados.reduce((acc, producto) => {
@@ -33,11 +32,39 @@ export default function Splidecomponent() {
     mostrarDetalles(); // Cambia el estado para mostrar/ocultar el sidebar
   };
 
+
+  useEffect(() => {
+    // Añade una entrada al historial cuando el modal se abre
+    if (verproducto) {
+      window.history.pushState({ modalOpen: true }, '');
+    }
+
+    // Escucha el evento popstate para cerrar el modal
+    const handlePopState = (event) => {
+      if (event.state?.modalOpen) {
+        setVerproducto(false); // Aquí cierras el modal
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    // Limpieza al desmontar el componente
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [verproducto, setVerproducto]);
+
+
   if (!isLoaded) {
     return (
       <Loading />
     );
   }
+
+
+  window.onpopstate = function (event) {
+    console.log('cerrar modal')
+    setVerproducto(false)
+    //history.replaceState({}, '');
+  };
   return (
     <div
       className={`relative ${visibleDetalles ? "bg-gray-100 bg-opacity-50" : "bg-gray-100"
@@ -50,8 +77,15 @@ export default function Splidecomponent() {
           onClick={toggleSidebar}
         ></div>
       )}
+      {verproducto && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 z-40"
+          onClick={toggleSidebar}
+        ></div>
+      )}
 
-      <Navbar />
+      {verproducto ? '' : <Navbar />}
+
       {loadFontAwesome()}
       {/* Sidebar aquí */}
       <div
@@ -63,7 +97,17 @@ export default function Splidecomponent() {
         {/* Resto del contenido del sidebar */}
       </div>
 
+
+      {verproducto ? (
+        <div className="">
+          <Modal />
+        </div>
+      ) : ''}
+
+
       {/* El resto de tu página aquí, asegúrate de agregar un z-index menor al overlay si es necesario */}
+
+
       <div
         className={`transition-opacity duration-500 ${visibleDetalles ? "opacity-50" : "opacity-100"
           }`}
@@ -72,12 +116,12 @@ export default function Splidecomponent() {
         <br />
         <br />
         <br />
-        {Object.keys(productosPorMarca).map((marca) => (
+        {Object.keys(productosPorMarca).map((marca, i) => (
           // SECCION
 
           <main
-            key={marca}
-            className="  px-2 "
+            key={i}
+            className="p-4"
             onClick={() => {
               if (visibleDetalles == true) {
                 mostrarDetalles();
@@ -85,60 +129,18 @@ export default function Splidecomponent() {
             }}
           >
 
-            <h6 className="mx-6 text-2xl font-bold text-gray-900 py-2 ">
+            {/* <h6 className=" text-2xl font-bold text-gray-900 ">
               {marca}
-            </h6>
-            <Splide
-              options={{
-                type: "slide",
-                //autoplay: true,
-                //autoplaySpeed: 2000,
-                //pauseOnHover: true,
-                perPage: 4,
-                perMove: 1,
-                type: "slide",
-                // gap: '1rem',
-                // arrows: true,
-                pagination: false,
-                gap: 10,
-                padding: 5,
-                breakpoints: {
-                  420: {
-                    perPage: 1,
-                  },
-                  640: {
-                    perPage: 1,
-                  },
-                  768: {
-                    perPage: 2,
-                  },
-                  991: {
-                    perPage: 2,
-                  },
-                  1024: {
-                    perPage: 2,
-                  },
-                  1200: {
-                    perPage: 2,
-                  },
-                  1440: {
-                    perPage: 3,
-                  },
-                  1600: {
-                    perPage: 4,
-                  },
-                  1920: {
-                    perPage: 5,
-                  },
-                },
-              }}
-            >
-              {productosPorMarca[marca].slice(0, 30).map((producto) => (
-                <SplideSlide key={producto.id_producto}>
-                  <Card producto={producto} />
-                </SplideSlide>
+            </h6> */}
+
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-1">
+              {productosPorMarca[marca].slice(0, 30).map((producto, i) => (
+                <Card key={i} producto={producto} />
               ))}
-            </Splide>
+            </div>
+
+
           </main>
           // END SECCION
         ))}

@@ -55,16 +55,18 @@
 
 /* Estilo para la barra de desplazamiento en su totalidad */
 .scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: #666 #999;
+
     /* thumb and track color in Firefox */
+    overflow-y: auto;
+        /* Habilita scroll vertical */
+        /* height: 100%; */
 }
 
 /* Estilo para el "thumb" (la parte que agarras) */
 .scrollbar::-webkit-scrollbar-thumb {
-    background-color: #999;
+    /* background-color: #999; */
     /* Color del thumb */
-    border-radius: 7px;
+    border-radius: 1px;
     /* Bordes redondeados */
 }
 
@@ -86,7 +88,7 @@
 } */
 
 /* card producto */
-.card .product{
+.card .product {
     height: 85%;
     padding: 20px;
     display: flex;
@@ -95,7 +97,8 @@
     position: relative;
     transform-style: preserve-3d;
 }
-.product .number{
+
+.product .number {
     font-size: 80px;
     line-height: 80px;
     font-style: italic;

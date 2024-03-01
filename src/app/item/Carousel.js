@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
+//import 'smartphoto/css/smartphoto.min.css';
 
-export default function Carousel({ producto, selectImage }) {
+export default function Carousel({ producto }) {
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const length = producto.imagenes.length;
@@ -17,6 +19,12 @@ export default function Carousel({ producto, selectImage }) {
   if (!Object.values(producto.imagenes) || Object.values(producto.imagenes).length <= 0) {
     return null;
   }
+
+  // useEffect(() => {
+  //   import('smartphoto').then(({ default: SmartPhoto }) => {
+  //     new SmartPhoto(".js-smartphoto");
+  //   });
+  // }, []); // Asegurándose de que SmartPhoto se inicialice solo una vez.
 
   return (
     <div className="flex items-center justify-center">
@@ -36,9 +44,7 @@ export default function Carousel({ producto, selectImage }) {
               src={`https://multilaptops.net/${row.ruta_img}`}
               alt={`Imagen ${index + 1}`}
               className="w-full "
-              onClick={() =>
-                selectImage(`https://multilaptops.net/${row.ruta_img}`)
-              }
+
             />
           </div>
         ))}
@@ -46,6 +52,14 @@ export default function Carousel({ producto, selectImage }) {
       <button onClick={nextSlide} className="p-4">
         {">"}
       </button>
+
+
+      {/* <a href="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301685/1762083459.webp" class="js-smartphoto" data-caption="bear" data-id="bear" data-group="0">
+        <img src="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301685/1762083459.webp" width="360" />
+      </a>
+      <a href="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301685/1762083459.webp" class="js-smartphoto" data-caption="camel" data-id="camel" data-group="0">
+        <img src="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301685/1762083459.webp" width="360" />
+      </a> */}
     </div>
   );
 }

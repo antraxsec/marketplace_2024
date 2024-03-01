@@ -13,7 +13,7 @@ import Loading from '@/components/Loading';
 
 export default function Cuerpoitemid({ producto }) {
 
-  // console.log('Unico', producto)
+  console.log('Unico', producto)
   const { precioGanacia, tipoMoneda, isChecked, productos, isLoaded } = useProductos();
   const router = useRouter();
   const [mainImage, setMainImage] = useState("");
@@ -194,7 +194,7 @@ export default function Cuerpoitemid({ producto }) {
                   Bs{" "}
                   {(
                     (Number(producto.costo_avg) + precioGanacia) *
-                    Number(producto.factor_avg)
+                    Number(8)
                   ).toFixed(2)}
                 </span>
               )
