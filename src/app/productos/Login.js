@@ -4,12 +4,12 @@ import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebas
 import { app, db } from '../firebaseConfig'; // Asegúrate de que la ruta sea correcta
 import { useProductos } from '@/context/Context';
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 import Loading from '@/components/Loading';
 // Asegúrate de que este es el camino correcto hacia tu archivo de configuración de Firebase.
 
 const Login = () => {
-    const router = useRouter();
+    const router = useRouter()
     const { setUser } = useProductos();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -46,7 +46,8 @@ const Login = () => {
                     uid: user.uid,
                     ...userData // Incluye nombre, número, rol, etc.
                 }));
-                router.push('/productos');
+                router.push('/productos', { scroll: false })
+
                 console.log('Inicio de sesión exitoso con datos adicionales:', userData);
             } else {
                 console.log("No se encontraron datos adicionales del usuario.");

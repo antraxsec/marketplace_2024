@@ -4,7 +4,7 @@ export default function Footer() {
     return (
 
 
-        <footer className="bg-white shadow  m-4">
+        <footer className="bg-white shadow dark:bg-dark-800  m-4">
             <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <a href="#" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">

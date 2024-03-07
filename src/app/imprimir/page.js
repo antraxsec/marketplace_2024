@@ -5,7 +5,7 @@ import Cuerpo from './Cuerpo';
 
 export default async function page() {
     let productos = await api.productos()
-
+    //console.log(productos)
 
     function printContent() {
         // Hide elements you don't want to print using JavaScript (optional)

@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db, app } from '../firebaseConfig'; // Asegúrate de que la ruta sea correcta
 import { doc, setDoc, getDoc, onSnapshot } from "firebase/firestore";
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 import Loading from '@/components/Loading';
 import { useProductos } from '@/context/Context';
+import Link from 'next/link';
 
 export default function page() {
+  const router = useRouter()
   const { user } = useProductos();
   const [data, setData] = useState({});
 
@@ -77,7 +79,7 @@ export default function page() {
   }, [tipoUsuario]);
 
 
-  const router = useRouter();
+
   const [activo, setActivo] = useState(false);
 
   useEffect(() => {
@@ -91,7 +93,8 @@ export default function page() {
         if (docSnap.data().rol === 'admin') {
           setActivo(true);
         } else {
-          router.push('/');
+          router.push('/', { scroll: false })
+
         }
         // Usuario está autenticado
 
@@ -99,7 +102,8 @@ export default function page() {
 
       } else {
         // Usuario no está autenticado
-        router.push('/');
+        router.push('/', { scroll: false })
+
       }
     });
   }, [user]);
@@ -219,12 +223,12 @@ export default function page() {
           </div>
 
           <div className="text-center">
-            <a
+            <Link
               href='/productos'
               className="text-white mx-2 bg-gray-800 hover:bg-[#22c55e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-[#86efac] dark:focus:ring-blue-800"
             >
               regresar
-            </a>
+            </Link>
             <button
               type="submit"
               className="text-white bg-[#4ade80] hover:bg-[#22c55e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-[#86efac] dark:focus:ring-blue-800"

@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from 'react'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from '../firebaseConfig'; //
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 import Loading from '@/components/Loading';
 import { useProductos } from '@/context/Context';
 import Link from 'next/link';
 
 export default function page() {
     const { user } = useProductos();
-    const router = useRouter();
+    const router = useRouter()
     const [activo, setActivo] = useState(false);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function page() {
                 setActivo(true);
             } else {
                 // Usuario no está autenticado
-                router.push('/');
+                router.push('/', { scroll: false })
             }
         });
     }, []);
