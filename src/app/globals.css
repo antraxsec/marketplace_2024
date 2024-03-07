@@ -108,22 +108,15 @@
 
 /* imagenes carrucel */
 
-.imagen-galeria {
-    width: 100%;
-    /* Asegura que la imagen ocupe todo el ancho del contenedor */
-    height: auto;
-    /* Mantiene la altura proporcional al nuevo ancho */
-    object-fit: cover;
-    /* Ajusta la imagen para cubrir el contenedor, puedes cambiarlo a 'contain' si prefieres */
-}
+
 
 /* Estilos para asegurar que las imágenes en PhotoSwipe mantengan su relación de aspecto */
-.pswp__img {
+/* .pswp__img {
     max-width: none !important;
     object-fit: contain !important;
-}
+} */
 
 /* Ocultar el placeholder de imagen en blanco para transiciones sin problemas */
-.pswp__img--placeholder--blank {
+/* .pswp__img--placeholder--blank {
     display: none !important;
-}
+} */

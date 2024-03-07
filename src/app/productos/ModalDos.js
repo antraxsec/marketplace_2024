@@ -24,15 +24,18 @@ export default function ModalDos() {
     };
 
     useEffect(() => {
-        const lightbox = new PhotoSwipeLightbox({
-            gallery: '#mi-galeria',
-            children: 'a',
-            pswpModule: () => import('photoswipe'),
+        let lightbox = new PhotoSwipeLightbox({
+          gallery: '#mi_galeria_' + producto.id_producto,
+          children: 'a',
+          pswpModule: () => import('photoswipe'),
         });
         lightbox.init();
-
-        return () => lightbox.destroy();
-    }, []);
+    
+        return () => {
+          lightbox.destroy();
+          lightbox = null;
+        };
+      }, []);
 
     const verImg = () => {
         document.getElementById("imagen").click();
@@ -66,7 +69,7 @@ export default function ModalDos() {
                         <div className=" ">
                             <div className="container">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-1">
-
+                                     
                                     {/* Parte izquierda: Imagen principal y thumbnails */}
                                     <div className="w-full h-full  flex items-center justify-center">
 
@@ -74,11 +77,16 @@ export default function ModalDos() {
                                         <img src={obtenerImagenUrl()} onClick={verImg} alt='' className="mx-auto " />
 
                                         {/* Miniaturas que estan ocultos */}
-                                        <div id="mi-galeria" className="hidden p-4">
+                                        <div id={ `mi_galeria_` + producto.id_producto} className="pswp-gallery hidden p-4">
 
                                             {Object.values(producto.imagenes).map((imagen, index) => (
 
-                                                <a href={`https://multilaptops.net/${imagen.ruta_img}`} id='imagen' data-pswp-width="1200" data-pswp-height="900" target="_blank" key={index} className="hover:opacity-75  ">
+                                                <a href={`https://multilaptops.net/${imagen.ruta_img}`} id='imagen' 
+                                                    // data-pswp-width={imagen.width}
+                                                    // data-pswp-height={imagen.height}
+                                                    // target="_blank" 
+                                                    key={index} 
+                                                    className="hover:opacity-75  ">
                                                     <img src={`https://multilaptops.net/${imagen.ruta_img}`} alt={`Imagen ${index + 1}`} className="rounded-lg shadow-sm " />
                                                 </a>
 

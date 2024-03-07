@@ -45,11 +45,12 @@ function Cardimprimir({ producto }) {
                             "Procesador",
                             "Memoria RAM",
                             "Unidad de estado solido (SSD)",
+                            "Disco duro (HDD)",
                             "Pantalla",
                         ].map((cualidad, index) => (
                             <div key={index}>
                                 <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-1 ">
-                                    {cualidad === 'Unidad de estado solido (SSD)' ? 'estado solido (SSD)' : cualidad}
+                                    {cualidad === 'Unidad de estado solido (SSD)' ? 'Estado solido (SSD)' : cualidad}
 
                                 </h6>
                                 {Object.values(producto.especificacion).map((row, i) => {
@@ -65,8 +66,8 @@ function Cardimprimir({ producto }) {
 
                     <div className="my-5 flex flex-col items-center">
                         <div className="multilaptops-text">
-                            <span className="color-one text-1xl font-bold">multi</span>
-                            <span className="color-two text-1xl font-bold">laptops</span>
+                            <span className="color-one text-1xl font-bold">Multi</span>
+                            <span className="color-two text-1xl font-bold">Laptops</span>
                         </div>
                         {/* {isChecked ? (
                             <span className="text-2xl font-bold text-gray-900 sm:text-2xl mb-0 card-info-element">
