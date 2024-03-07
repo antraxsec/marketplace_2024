@@ -104,34 +104,26 @@ export const ProductosProvider = ({ children }) => {
   // especial para precio 
   useEffect(() => {
 
-    if (user) {
-      if (user.rol === 'afiliado') {
-        //recuperar datos de firebase afiliados
-        const documentoId = 'afiliado';
-        const docRef = doc(db, "PrecioModificable", documentoId);
-        const unsubscribe = onSnapshot(docRef, (doc) => {
-          if (doc.exists()) {
-            console.log("Datos actuales: ", doc.data());
-            setConfigPrecio(doc.data());
-          } else {
-            // Documento no existe
-            console.log("El documento no existe!");
-          }
-        });
 
-        // Limpiar suscripción al desmontar el componente
-        return () => unsubscribe();
-        //end recupae dato de firebase
-      } else if (user.rol === 'vendedor') {
-        //recupear datos de firebase vendedor
-      } else if (user.rol === 'admin') {
-        // recupear de localstorage
-        setConfigPrecio(recuperarDeLocalStorage("config-precio"));
+    //recuperar datos de firebase afiliados
+    const documentoId = 'afiliado';
+    const docRef = doc(db, "PrecioModificable", documentoId);
+    const unsubscribe = onSnapshot(docRef, (doc) => {
+      if (doc.exists()) {
+        console.log("Datos actuales: ", doc.data());
+        setConfigPrecio(doc.data());
+
+      } else {
+        // Documento no existe
+        console.log("El documento no existe!");
       }
+    });
+    unsubscribe()
 
-    }
+    setConfigPrecio(recuperarDeLocalStorage("config-precio"));
 
-  }, [user])
+
+  }, [])
 
 
   const filtrar = (data) => {

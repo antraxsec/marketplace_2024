@@ -2,6 +2,8 @@
 import { useProductos } from "@/context/Context";
 import Link from "next/link";
 function Cardimprimir({ producto }) {
+    console.log('card producto uno', producto)
+
     const { precioGanacia, isChecked } = useProductos();
 
     const obtenerImagenUrl = () => {

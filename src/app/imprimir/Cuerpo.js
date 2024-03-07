@@ -3,20 +3,37 @@ import React, { useEffect, useState } from 'react';
 import Cardimprimir from '@/components/Cardimprimir';
 
 export default function Cuerpo({ productos }) {
+
+    console.log('productos', productos)
     const [mostrar, setMostrar] = useState(true);
-    const [idsFiltrar, setIdsFiltrar] = useState(["100448", "100418", "100362", "100199", "100442", "100392", "100382", "100208", "100279"]);
+    const [idsFiltrar, setIdsFiltrar] = useState([]);
     const [productosfiltrados, setProductosfiltrados] = useState([]);
     const [sku, setSku] = useState();
 
     function filtrar() {
         let productosnew = productos.filter(producto => idsFiltrar.includes(producto.id_producto));
+        console.log('Productos filtrados', productosnew)
+
+        localStorage.setItem('productoImprimir', JSON.stringify(productosnew));
+
         setProductosfiltrados(productosnew);
     }
 
     function agregar() {
         const nuevoArray = [...idsFiltrar, sku];
         setIdsFiltrar(nuevoArray);
+        console.log('Nuevo ', nuevoArray)
+        localStorage.setItem('idImprimir', JSON.stringify(nuevoArray));
     }
+    useEffect(() => {
+        setProductosfiltrados(JSON.parse(localStorage.getItem('productoImprimir')));
+        if (JSON.parse(localStorage.getItem('idImprimir')) == undefined) {
+            console.log('entro')
+        } else {
+            setIdsFiltrar(JSON.parse(localStorage.getItem('idImprimir')));
+        }
+
+    }, [])
 
 
     return (
@@ -28,8 +45,8 @@ export default function Cuerpo({ productos }) {
                         <button onClick={agregar} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Agregar</button>
                     </div>
                     <div>
-                        {idsFiltrar.map(row => (
-                            <div key={row}>
+                        {idsFiltrar.map((row, i) => (
+                            <div key={i}>
                                 <small >
                                     {row}
                                 </small>

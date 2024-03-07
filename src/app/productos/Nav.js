@@ -135,6 +135,13 @@ export default function Nav() {
                 </form>
               </div>
 
+              {user ? user.rol === 'admin' ? (
+                <div onClick={() => setCpo(true)}>
+                  <h1 className="text-3xl w-10 h-10 rounded-full  flex items-center text-center p-1 mx-2  hover:bg-gray-100">
+                    <CiSettings />
+                  </h1>
+                </div>
+              ) : null : null}
 
               <div onClick={() => setCpo(true)}>
                 <h1 className="text-3xl w-10 h-10 rounded-full  flex items-center text-center p-1 mx-2  hover:bg-gray-100">
@@ -143,10 +150,7 @@ export default function Nav() {
               </div>
 
 
-
               <div>
-
-
                 <button
                   type="button"
                   className="flex p-1 mx-2 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"

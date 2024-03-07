@@ -7,11 +7,11 @@ import Aside from './Aside';
 import Secctions from './Secctions';
 import Footer from './Footer';
 import Loading from '@/components/Loading';
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 
 export default function page() {
-
+  const router = useRouter()
   const [activo, setActivo] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function page() {
         setActivo(true);
       } else {
         // Usuario no está autenticado
-        redirect('/')
+        router.push('/', { scroll: false })
       }
     });
   }, []);
