@@ -1,15 +1,41 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from '../firebaseConfig'; //
 import Nav from './Nav';
 import Aside from './Aside';
 import Secctions from './Secctions';
+import Footer from './Footer';
+import Loading from '@/components/Loading';
+import { redirect } from 'next/navigation'
 
 
 export default function page() {
+
+  const [activo, setActivo] = useState(false);
+
+  useEffect(() => {
+    const auth = getAuth(app); // Utiliza la instancia de la aplicación Firebase inicializada
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Usuario está autenticado
+        setActivo(true);
+      } else {
+        // Usuario no está autenticado
+        redirect('/')
+      }
+    });
+  }, []);
+
+  if (!activo) {
+    return <Loading />;
+  }
   return (
     <div className="">
       <Nav />
       <Aside />
       <Secctions />
+      <Footer />
     </div>
   );
 }

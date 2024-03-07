@@ -78,7 +78,7 @@
 
 /* Estilo para la barra de desplazamiento (en general) */
 .scrollbar::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
     /* Ancho de la barra de desplazamiento */
 }
 
@@ -103,4 +103,27 @@
     line-height: 80px;
     font-style: italic;
     opacity: 0.25;
+}
+
+
+/* imagenes carrucel */
+
+.imagen-galeria {
+    width: 100%;
+    /* Asegura que la imagen ocupe todo el ancho del contenedor */
+    height: auto;
+    /* Mantiene la altura proporcional al nuevo ancho */
+    object-fit: cover;
+    /* Ajusta la imagen para cubrir el contenedor, puedes cambiarlo a 'contain' si prefieres */
+}
+
+/* Estilos para asegurar que las imágenes en PhotoSwipe mantengan su relación de aspecto */
+.pswp__img {
+    max-width: none !important;
+    object-fit: contain !important;
+}
+
+/* Ocultar el placeholder de imagen en blanco para transiciones sin problemas */
+.pswp__img--placeholder--blank {
+    display: none !important;
 }

@@ -6,7 +6,7 @@ import FlexSearch from 'flexsearch';
 import Precioconfig from "./Precioconfig";
 
 export default function Nav() {
-  const { productos, filtrar, setCpo, cpo } = useProductos();
+  const { productos, filtrar, setCpo, cpo, mostrarslider, setMostrarslider, user } = useProductos();
   const [busqueda, setBusqueda] = useState("");
 
   useEffect(() => {
@@ -48,11 +48,13 @@ export default function Nav() {
   }, [busqueda]);
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white border-b opacity-90 border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+    <nav className="fixed top-0 z-50 w-full bg-white border-b opacity-90 border-gray-100 dark:bg-dark-800 dark:border-dark-800">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
+
             <button
+              onClick={() => setMostrarslider(!mostrarslider)}
               data-drawer-target="logo-sidebar"
               data-drawer-toggle="logo-sidebar"
               aria-controls="logo-sidebar"
@@ -75,12 +77,12 @@ export default function Nav() {
               </svg>
             </button>
             <a
-              href="https://flowbite.com"
-              className="flex ms-2 md:me-24 items-center"
+              href="#"
+              className="flex ms-2 md:me-24 items-center "
             >
               <img
                 src="https://multilaptops.net/recursos/imagenes/favicon/ml_favicon2.png"
-                className="h-8 me-3"
+                className="h-8 me-3 grayscale"
                 alt="FlowBite Logo"
               />
 
@@ -93,11 +95,12 @@ export default function Nav() {
               {/* <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">multilaptops</span> */}
             </a>
           </div>
-          <div className="flex items-center">
-            <div className="flex items-center ms-3">
-              <div>
-                <form className="max-w-lg mx-auto">
-                  <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+          <div className="flex items-center flex-grow ">
+
+            <div className="flex items-center ms-3 mt-1 flex-grow ">
+              <div className='flex-grow '>
+                <form className="max-w-lg mx-auto ">
+                  <label className="mb-2  text-sm font-medium text-gray-900 sr-only dark:text-white">
                     Buscar
                   </label>
                   <div className="relative">
@@ -132,26 +135,32 @@ export default function Nav() {
                 </form>
               </div>
 
+
               <div onClick={() => setCpo(true)}>
                 <h1 className="text-3xl w-10 h-10 rounded-full  flex items-center text-center p-1 mx-2  hover:bg-gray-100">
                   <CiSettings />
                 </h1>
               </div>
-              {/* <div>
-                  <button
-                    type="button"
-                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                    aria-expanded="false"
-                    data-dropdown-toggle="dropdown-user"
-                  >
-                    <span className="sr-only">Open user menu</span>
-                    <img
-                      className="w-8 h-8 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                      alt="user photo"
-                    />
-                  </button>
-                </div> */}
+
+
+
+              <div>
+
+
+                <button
+                  type="button"
+                  className="flex p-1 mx-2 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                  aria-expanded="false"
+                  data-dropdown-toggle="dropdown-user"
+                >
+                  <span className="sr-only">Open user menu</span>
+                  <svg className="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a9 9 0 0 0 5-1.5 4 4 0 0 0-4-3.5h-2a4 4 0 0 0-4 3.5 9 9 0 0 0 5 1.5Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  </svg>
+                </button>
+
+
+              </div>
 
               {/* <div
                 className="z-50 absolute  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"

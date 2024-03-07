@@ -1,10 +1,7 @@
+import { loadFontAwesome } from '@/app/services/fontawesome';
 import { useProductos } from '@/context/Context';
 import React, { useEffect, useState } from 'react'
-import Loading from './Loading';
-import Carousel from '@/app/item/Carousel';
 
-import ReactImageLightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css'; // Importa el estilo de la librería
 
 export default function Modal() {
     const { producto, tipoMoneda, isChecked, precioGanacia, setVerproducto, precioConfigurado } = useProductos()
@@ -47,10 +44,11 @@ export default function Modal() {
 
     return (
 
-        <div id="default-modal" tabIndex="-1" aria-hidden="true" className=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  h-[calc(100%-1rem)] max-h-full ">
+        <div id="default-modal" tabIndex="-1" aria-hidden="true" className=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  h-[calc(100%-1rem)] max-h-full scrollbar">
+            {loadFontAwesome()}
             <div className="relative p-4 w-full  ">
 
-                <div className="relative bg-white  dark:bg-gray-700 rounded-3xl  shadow-lg">
+                <div className="relative border bg-white  dark:bg-gray-700 rounded-3xl  shadow-lg">
 
                     <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -109,7 +107,7 @@ export default function Modal() {
                                     </div>
 
                                     {/* Parte derecha: Detalles del producto */}
-                                    <div className="p-4">
+                                    <div className="p-7">
                                         <h2 className="text-xl md:text-2xl font-bold">{producto.nombre_linea}</h2>
                                         {/* Rating y precio */}
                                         <div className="mt-4">

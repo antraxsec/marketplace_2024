@@ -1,48 +1,243 @@
-"use client"
-import React, { useState } from 'react';
+'use client'
+import React, { useEffect, useState } from 'react'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db, app } from '../firebaseConfig'; // Asegúrate de que la ruta sea correcta
+import { doc, setDoc, getDoc, onSnapshot } from "firebase/firestore";
+import { useRouter } from 'next/navigation';
+import Loading from '@/components/Loading';
+import { useProductos } from '@/context/Context';
 
-export default function SearchPage() {
-  const [searchVisible, setSearchVisible] = useState(false);
+export default function page() {
+  const { user } = useProductos();
+  const [data, setData] = useState({});
+
+  const [tipoPrecio, setTipoPrecio] = useState("");
+  const [tc, setTc] = useState("");
+  const [moneda, setMoneda] = useState("");
+  const [margen, setMargen] = useState("");
+  const [tipoUsuario, setTipoUsuario] = useState("afiliado");
+
+  const documentoId = tipoUsuario;
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // Crea un objeto con los datos del formulario
+    const formData = {
+      tipoPrecio,
+      tc,
+      moneda,
+      margen,
+      tipoUsuario,
+    };
+
+    // Referencia al documento específico en la colección
+    const docRef = doc(db, "PrecioModificable", documentoId);
+
+    try {
+      // Intenta obtener el documento
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        // Si el documento no existe, créalo
+        await setDoc(docRef, formData);
+        console.log("Documento creado con éxito");
+      } else {
+        // Si el documento ya existe, actualízalo
+        await setDoc(docRef, formData, { merge: true });
+        console.log("Documento actualizado con éxito");
+      }
+    } catch (e) {
+      console.error("Error al crear o actualizar el documento: ", e);
+      // Maneja el error aquí
+    }
+  };
+
+
+  useEffect(() => {
+    const docRef = doc(db, "PrecioModificable", documentoId);
+
+    const unsubscribe = onSnapshot(docRef, (doc) => {
+      if (doc.exists()) {
+        console.log("Datos actuales: ", doc.data());
+        setData(doc.data());
+        //actualizar datos
+        setTipoPrecio(doc.data().tipoPrecio);
+        setTc(doc.data().tc);
+        setMoneda(doc.data().moneda);
+        setMargen(doc.data().margen);
+      } else {
+        // Documento no existe
+        console.log("El documento no existe!");
+      }
+    });
+
+    // Limpiar suscripción al desmontar el componente
+    return () => unsubscribe();
+  }, [tipoUsuario]);
+
+
+  const router = useRouter();
+  const [activo, setActivo] = useState(false);
+
+  useEffect(() => {
+    const auth = getAuth(app); // Utiliza la instancia de la aplicación Firebase inicializada
+    onAuthStateChanged(auth, async (users) => {
+      //console.log(users)
+      if (users) {
+        const docRef = doc(db, "usuarios", users.uid);
+        const docSnap = await getDoc(docRef);
+        console.log(docSnap.data())
+        if (docSnap.data().rol === 'admin') {
+          setActivo(true);
+        } else {
+          router.push('/');
+        }
+        // Usuario está autenticado
+
+
+
+      } else {
+        // Usuario no está autenticado
+        router.push('/');
+      }
+    });
+  }, [user]);
+
+
+
+  if (!activo) {
+    return <Loading />;
+  }
 
   return (
-    <>
-      <button
-        className="p-2 text-white bg-blue-500 rounded transition duration-300 ease-in-out hover:bg-blue-600 mb-4"
-        onClick={() => setSearchVisible(!searchVisible)}
-      >
-        {searchVisible ? 'Ocultar Búsqueda' : 'Mostrar Búsqueda'}
-      </button>
-      <div className="flex flex-col items-center justify-center h-screen">
+    <form onSubmit={handleSubmit} className="bg-[#f0fdf4] min-h-screen flex items-center justify-center">
+      <div className='grid grid-cols-2 gap-4 p-5 bg-white shadow-lg rounded-lg'>
 
 
-        {searchVisible && (
-          <div className="p-4 w-full max-w-lg border">
 
-            <form className="flex items-center">
-              <label for="voice-search" className="sr-only">Search</label>
-              <div className="relative w-full">
-                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.15 5.6h.01m3.337 1.913h.01m-6.979 0h.01M5.541 11h.01M15 15h2.706a1.957 1.957 0 0 0 1.883-1.325A9 9 0 1 0 2.043 11.89 9.1 9.1 0 0 0 7.2 19.1a8.62 8.62 0 0 0 3.769.9A2.013 2.013 0 0 0 13 18v-.857A2.034 2.034 0 0 1 15 15Z" />
-                  </svg>
-                </div>
-                <input type="text" id="voice-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." required />
-                <button type="button" className="absolute inset-y-0 end-0 flex items-center pe-3">
-                  <svg className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z" />
-                  </svg>
-                </button>
-              </div>
-              <button type="submit" className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <svg className="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                </svg>Buscar
-              </button>
-            </form>
+        <div className="col-span-2 md:col-span-1 px-3 py-2">
 
+          <h2 className="text-[#166534] text-xl font-semibold mb-4">{tipoUsuario}</h2>
+          <div className="bg-[#dcfce7] p-3 rounded-lg">
+            <div>
+              <div className="text-[#14532d]">Tipo Precio: {data.tipoPrecio}</div>
+              <div className="text-[#14532d]">TC: {data.tc}</div>
+              <div className="text-[#14532d]">Moneda: {data.moneda}</div>
+              <div className="text-[#14532d]">Margen: {data.margen}</div>
+              <div className="text-[#14532d]">Tipo Usuario: {data.tipoUsuario}</div>
+            </div>
           </div>
-        )}
+          <div className="mb-5">
+            <div className="flex items-center">
+              <input
+                id="afiliado"
+                type="radio"
+                name="tipo-usuario"
+                value="afiliado"
+                checked={tipoUsuario === "afiliado"}
+                onChange={(e) => setTipoUsuario(e.target.value)}
+                className="w-5 h-5 mr-2 text-[#31C48D] bg-[#F3FAF7] border-[#31C48D] rounded-lg focus:ring-blue-100 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label className="text-sm font-medium text-gray-900 dark:text-white">
+                Afiliado
+              </label>
+            </div>
+            <div className="flex items-center mt-2">
+              <input
+                id="vendedor"
+                type="radio"
+                name="tipo-usuario"
+                value="vendedor"
+                checked={tipoUsuario === "vendedor"}
+                onChange={(e) => setTipoUsuario(e.target.value)}
+                className="w-5 h-5 mr-2 text-[#31C48D] bg-[#F3FAF7] border-[#31C48D] rounded-lg focus:ring-blue-100 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label className="text-sm font-medium text-gray-900 dark:text-white">
+                Vendedor
+              </label>
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Tipo precio
+            </label>
+            <select
+              value={tipoPrecio}
+              onChange={(e) => setTipoPrecio(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#4ade80] focus:border-[#4ade80] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#4ade80] dark:focus:border-[#4ade80]"
+            >
+              <option value="">Seleccionar tipo de precio</option>
+              <option value="fijo">Precio variable fijo</option>
+              <option value="dinamico">Precio variable dinámico</option>
+            </select>
+          </div>
+          {tipoPrecio === "fijo" ? (
+            <div className="mb-5">
+              <div className="mb-5">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  TC
+                </label>
+                <input
+                  value={tc}
+                  onChange={(e) => setTc(e.target.value)}
+                  type="number"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#4ade80] focus:border-[#4ade80] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#4ade80] dark:focus:border-[#4ade80]"
+                  placeholder="TC"
+                />
+              </div>
+            </div>
+          ) : null}
+
+          <div className="grid grid-cols-2 gap-1">
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                moneda
+              </label>
+              <select
+                value={moneda}
+                onChange={(e) => setMoneda(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#4ade80] focus:border-[#4ade80] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#4ade80] dark:focus:border-[#4ade80]"
+              >
+                <option value="">Seleccionar moneda</option>
+                <option value="dolares">Dolares</option>
+                <option value="bolivianos">Bolivianos</option>
+              </select>
+            </div>
+            <div className="mb-5">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                margen
+              </label>
+              <input
+                value={margen}
+                onChange={(e) => setMargen(e.target.value)}
+                type="number"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#4ade80] focus:border-[#4ade80] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#4ade80] dark:focus:border-[#4ade80]"
+                placeholder="Margen"
+              />
+            </div>
+          </div>
+
+          <div className="text-center">
+            <a
+              href='/productos'
+              className="text-white mx-2 bg-gray-800 hover:bg-[#22c55e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-[#86efac] dark:focus:ring-blue-800"
+            >
+              regresar
+            </a>
+            <button
+              type="submit"
+              className="text-white bg-[#4ade80] hover:bg-[#22c55e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-[#86efac] dark:focus:ring-blue-800"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+        <div className="col-span-2 md:col-span-1 flex items-center justify-center">
+          {/* Contenido adicional aquí */}
+          <div className="text-center text-[#15803d]">Contenido adicional</div>
+        </div>
       </div>
-    </>
-  );
+    </form>
+  )
 }

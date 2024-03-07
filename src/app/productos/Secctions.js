@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Cards from './Cards'
 import { useProductos } from '@/context/Context'
 import Precioconfig from "./Precioconfig";
+import ModalDos from './ModalDos';
+
 
 export default function Secctions() {
   const {
@@ -14,19 +16,32 @@ export default function Secctions() {
     verproducto,
     setCpo,
     cpo,
+    setMostrarslider
   } = useProductos();
 
   // useEffect(() => {
   //     console.log(productosFiltrados)
   // }, [productosFiltrados]);
   return (
-    <div className="p-4 sm:ml-64 mt-3 ">
+    <div className="pt-6 p-3 sm:ml-64  dark:bg-dark-800 ">
+      {
+        verproducto ? (
+          <div className="">
+            <ModalDos />
+          </div>
+        ) : ('')
+      }
+
       {/* mostrar configuracion precio */}
       {cpo ? <Precioconfig /> : null}
       <div
-        className="  dark:border-gray-700 mt-14 "
-        onClick={() => setCpo(false)}
+        className="  dark:border-gray-700 mt-14"
+        onClick={() => {
+          setCpo(false)
+          setMostrarslider(true)
+        }}
       >
+
         <h1 className="text-2xl font-bold text-gray-500 my-2">Productos</h1>
         <span className="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-4 mb-3">
           <b className=""> Productos</b>
@@ -69,7 +84,7 @@ export default function Secctions() {
         ) : null}
 
         {/* card */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {productosFiltrados.map((producto, i) => (
             <Cards key={i} producto={producto} />
           ))}
@@ -150,6 +165,6 @@ export default function Secctions() {
                     </div>
                 </div> */}
       </div>
-    </div>
+    </div >
   );
 }

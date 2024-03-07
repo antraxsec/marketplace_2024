@@ -34,8 +34,8 @@ export default function Precioconfig() {
   }, [configPrecio]);
 
   return (
-    <form onSubmit={handleSubmit} className="...">
-      <div className="absolute z-50 left-auto  right-0  w-64 text-sm text-gray-800  bg-white border border-gray-200 rounded-lg shadow-lg m-2 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+    <form onSubmit={handleSubmit} className="">
+      <div className=" fixed z-50 left-auto  right-0  w-64 text-sm text-gray-800  bg-white border border-gray-200 rounded-lg shadow-lg m-2 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
         <div className="px-3 py-2 bg-[#16a34a] border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-800">
           <h3 className="font-semibold text-gray-100 dark:text-white">
             Configuracion de precio

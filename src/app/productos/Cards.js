@@ -2,7 +2,7 @@ import { useProductos } from "@/context/Context";
 import React from "react";
 
 export default function Cards({ producto }) {
-  const { precioConfigurado } = useProductos();
+  const { precioConfigurado, isChecked, setProducto, setVerproducto } = useProductos();
   const obtenerImagenUrl = () => {
     const imagen = Object.values(producto.imagenes).find(
       (row) => row.cod_albumtipo === "5"
@@ -12,57 +12,45 @@ export default function Cards({ producto }) {
       : `https://multilaptops.net/recursos/imagenes/productos/sin_imagen.webp`;
   };
   return (
-    <div className="w-full max-w-sm gb-gray-50  border border-gray-100 rounded-3xl shadow-md p-2">
-      <div className="flex flex-col  p-2 ">
+    <div className="max-w-md mx-auto bg-[#FBFBFC] border border-gray-100 rounded-3xl shadow-md flex flex-col p-4 dark:bg-dark-600 dark:border-dark-600">
+      <div className="flex flex-col items-center">
         <img
-          className=" rounded-lg"
+          onClick={() => {
+            setProducto(producto);
+            setVerproducto(true);
+          }}
+          className="w-full max-w-xs rounded-lg object-cover"
           src={obtenerImagenUrl()}
-          alt="Bonnie image"
+          alt={`${producto.nombre_marca} image`}
         />
+      </div>
+      <div className="text-left">
         <h5 className="mb-1 text-xl font-semibold text-gray-700 dark:text-white">
-          {" "}
-          {producto.nombre_linea == " " ? "Laptops" : producto.nombre_linea}
+          {producto.nombre_marca} {producto.id_producto}
         </h5>
-        <span className="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-3">
-          <b className="text-[#16a34a]"> {producto.nombre_marca}</b>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="self-center"
-            width="3"
-            height="4"
-            viewBox="0 0 3 4"
-            fill="none"
-          >
-            <circle cx="1.5" cy="2" r="1.5" fill="#6B7280" />
-          </svg>
-          <b className="text-[#22c55e]"> {producto.id_producto}</b>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="self-center"
-            width="3"
-            height="4"
-            viewBox="0 0 3 4"
-            fill="none"
-          >
-            <circle cx="1.5" cy="2" r="1.5" fill="#6B7280" />
-          </svg>
-          <p className="text-[#4ade80]">{producto.nombre_modelo}</p>
-        </span>
-        <span className="text-sm text-gray-700 dark:text-gray-400 mt-2 font-normal">
-          {producto.referencia_producto}
-        </span>
-        <div className="mt-2 sm:mt-3 md:mt-3 px-3 pb-3 text-right">
-          <span className="text-sm font-semibold text-gray-900 dark:text-white">
+      </div>
+      <span
+        className="text-sm md:text-md text-gray-600 dark:text-dark-400 mt-2 font-normal block overflow-hidden"
+        style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}
+        title={producto.referencia_producto}
+      >
+        {producto.referencia_producto}
+      </span>
+
+
+      {/* Asegúrese de que este div se alinee a la parte inferior del contenedor flex. */}
+      <div className="mt-auto pt-3 pb-2 pe-0 w-full text-end">
+        {isChecked ? (
+          <span className="text-xl font-semibold text-gray-900 dark:text-white">
             {precioConfigurado(
               producto.factor_avg,
               producto.costo_avg,
               producto.precio_config
             )}
           </span>
-        </div>
+        ) : null}
       </div>
     </div>
+
   );
 }

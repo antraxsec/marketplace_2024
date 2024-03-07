@@ -28,9 +28,8 @@ export default function Splidecomponent() {
 
       {/* Menú de filtros */}
       <div
-        className={`transform transition-transform z-50  ${
-          menuVisible ? "translate-x-0" : "-translate-x-full"
-        } w-64 bg-gray-900 bg-opacity-75 p-4 fixed inset-y-0 left-0 text-white overflow-y-auto scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-600 scrollbar-track-gray-100`}
+        className={`transform transition-transform z-50  ${menuVisible ? "translate-x-0" : "-translate-x-full"
+          } w-64 bg-gray-900 bg-opacity-75 p-4 fixed inset-y-0 left-0 text-white overflow-y-auto scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-600 scrollbar-track-gray-100`}
       >
         {/* Contenido del menú */}
         <Buscar2 />

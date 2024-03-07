@@ -1,5 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { db } from '../app/firebaseConfig'; // Asegúrate de que la ruta sea correcta
+import { doc, onSnapshot } from "firebase/firestore";
 
 export const ProductosContext = createContext();
 export const useProductos = () => {
@@ -23,7 +25,8 @@ export const ProductosProvider = ({ children }) => {
   const [verproducto, setVerproducto] = useState(false);
   const [configPrecio, setConfigPrecio] = useState({}); //configuracion de precio
   const [cpo, setCpo] = useState(false); //para mostrar la configuracion del precio
-  const [mostrarslider, setMostrarslider] = useState(false);
+  const [mostrarslider, setMostrarslider] = useState(true);//mostrar el sidevar en SM para moviles 
+  const [user, setUser] = useState(null)
 
   // Función para guardar en localStorage
   const guardarEnLocalStorage = (key, value) => {
@@ -94,23 +97,42 @@ export const ProductosProvider = ({ children }) => {
     setPrecioGanancia(recuperarDeLocalStorage("precio"));
     setTipoMoneda(recuperarDeLocalStorage("tipo"));
     setIsChecked(recuperarDeLocalStorage("verprecio"));
-    setConfigPrecio(recuperarDeLocalStorage("config-precio"));
-    //setProductosFiltrados(recuperarDeLocalStorage('productosFiltrados') || []);
+    setUser(recuperarDeLocalStorage("user"));
 
-    /**
-     * Actualizar datos del fectch
-     */
-    //actaulizarData()
   }, []);
 
-  // Efecto para guardar productos filtrados en localStorage cuando cambian
-  // useEffect(() => {
-  //   if (productosFiltrados.length === 0) {
-  //     setProductosFiltrados(productos)
-  //   }
+  // especial para precio 
+  useEffect(() => {
 
-  //   //guardarEnLocalStorage('productosFiltrados', productosFiltrados);
-  // }, [productosFiltrados]);
+    if (user) {
+      if (user.rol === 'afiliado') {
+        //recuperar datos de firebase afiliados
+        const documentoId = 'afiliado';
+        const docRef = doc(db, "PrecioModificable", documentoId);
+        const unsubscribe = onSnapshot(docRef, (doc) => {
+          if (doc.exists()) {
+            console.log("Datos actuales: ", doc.data());
+            setConfigPrecio(doc.data());
+          } else {
+            // Documento no existe
+            console.log("El documento no existe!");
+          }
+        });
+
+        // Limpiar suscripción al desmontar el componente
+        return () => unsubscribe();
+        //end recupae dato de firebase
+      } else if (user.rol === 'vendedor') {
+        //recupear datos de firebase vendedor
+      } else if (user.rol === 'admin') {
+        // recupear de localstorage
+        setConfigPrecio(recuperarDeLocalStorage("config-precio"));
+      }
+
+    }
+
+  }, [user])
+
 
   const filtrar = (data) => {
     guardarEnLocalStorage("productosFiltrados", data);
@@ -129,6 +151,7 @@ export const ProductosProvider = ({ children }) => {
     localStorage.setItem("verprecio", JSON.stringify(!isChecked));
     setIsChecked(!isChecked);
   };
+
   const mostrarDetalles = () => {
     setVisibleDetalles(!visibleDetalles);
   };
@@ -140,6 +163,8 @@ export const ProductosProvider = ({ children }) => {
 
   // Mandar datos
   const precioConfigurado = (factor_avg, costo_avg, precio_config) => {
+
+    // console.log('precio config', Object.values(precio_config), Object.values(precio_config).length)
     if (!configPrecio) {
       return "Sin Configurar";
     }
@@ -150,7 +175,7 @@ export const ProductosProvider = ({ children }) => {
     if (configPrecio.tc) configPrecio.tc = Number(configPrecio.tc);
     if (configPrecio.margen) configPrecio.margen = Number(configPrecio.margen);
 
-    if (precio_config && precio_config.length > 0) {
+    if (Object.values(precio_config) && Object.values(precio_config).length > 0) {
       return `${precio_config[0].simbolo_moneda} ${Number(
         precio_config[0].valor_precio
       ).toFixed(2)}`;
@@ -209,6 +234,8 @@ export const ProductosProvider = ({ children }) => {
         cpo,
         mostrarslider,
         setMostrarslider,
+        setUser,
+        user
       }}
     >
       {children}
