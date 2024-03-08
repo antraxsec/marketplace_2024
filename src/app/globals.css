@@ -111,12 +111,12 @@
 
 
 /* Estilos para asegurar que las imágenes en PhotoSwipe mantengan su relación de aspecto */
-/* .pswp__img {
+.pswp__img {
     max-width: none !important;
     object-fit: contain !important;
-} */
+}
 
 /* Ocultar el placeholder de imagen en blanco para transiciones sin problemas */
-/* .pswp__img--placeholder--blank {
+.pswp__img--placeholder--blank {
     display: none !important;
-} */
+}

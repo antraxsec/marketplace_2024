@@ -26,7 +26,7 @@ function Cardimprimir({ producto }) {
 
     return (
         <div className='mb-[50px]'>
-            <div className=" rounded-3xl border border-gray-100 h-full p-5"> {/* shadow-sm flex flex-col items-center p-2 sm:max-w-sm h-[500px] card-hover */}
+            <div className=" rounded-3xl border border-gray-400 h-full p-5"> {/* shadow-sm flex flex-col items-center p-2 sm:max-w-sm h-[500px] card-hover */}
 
                 <img
                     className="w-full h-48 object-contain sombra-png"
@@ -36,35 +36,45 @@ function Cardimprimir({ producto }) {
 
                 <div className="flex flex-col justify-between flex-grow w-full ">
                     <p className="mt-1 text-lg font-bold tracking-tight text-gray-900 sm:text-xl text-left ps-2">
-                        {producto.nombre_marca} {producto.nombre_linea} {producto.id_producto}
+                        {producto.nombre_marca} {producto.id_producto}
                     </p>
-                    <hr className="my-5"></hr>
+                    <hr className="my-2"></hr>
 
-                    <div className="text-left w-full px-2 sm:px-10 ">
-
-                        {/* Especificaciones del Producto */}
+                    <div className="text-left w-full px-2 ">
                         {[
                             "Procesador",
+                            // "Serie de procesador",
+                            // "Generación del procesador (Intel)",
                             "Memoria RAM",
                             "Unidad de estado solido (SSD)",
                             "Disco duro (HDD)",
                             "Pantalla",
-                        ].map((cualidad, index) => (
-                            <div key={index}>
-                                <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-1 ">
-                                    {cualidad === 'Unidad de estado solido (SSD)' ? 'Estado solido (SSD)' : cualidad}
+                            "Gráficos",
+                        ].map((cualidad, index) => {
+                            // Primero, filtramos las especificaciones que coincidan con la cualidad actual.
+                            const especificacionesFiltradas = Object.values(producto.especificacion).filter(row => row.cualidad === cualidad);
 
+                            // Solo procedemos a renderizar si hay al menos una especificación válida.
+                            if (especificacionesFiltradas.length > 0) {
+                            return (
+                                <div key={index}>
+                                <h6 className="text-xs sm:text-sm font-bold text-gray-900 mt-1">
+                                    {cualidad}
                                 </h6>
-                                {Object.values(producto.especificacion).map((row, i) => {
-                                    return row.cualidad === cualidad ? (
-                                        <p key={i} className="text-gray-700">
-                                            {getFourWords(row.referencia_esp)}
-                                        </p>
-                                    ) : null;
-                                })}
-                            </div>
-                        ))}
+                                {especificacionesFiltradas.map((row, i) => (
+                                    // Aquí puedes elegir mostrar las primeras cuatro palabras o la referencia completa.
+                                    <p key={i} className="text-gray-700">
+                                    - {row.referencia_esp} {/* Si necesitas usar getFourWords, reemplaza row.referencia_esp por getFourWords(row.referencia_esp) */}
+                                    </p>
+                                ))}
+                                </div>
+                            );
+                            }
+                            // Si no hay especificaciones válidas, no retornamos nada para esta cualidad.
+                            return null;
+                        })}
                     </div>
+
 
                     <div className="my-5 flex flex-col items-center">
                         <div className="multilaptops-text">
