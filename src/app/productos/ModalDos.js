@@ -25,17 +25,17 @@ export default function ModalDos() {
 
     useEffect(() => {
         let lightbox = new PhotoSwipeLightbox({
-          gallery: '#mi_galeria_' + producto.id_producto,
-          children: 'a',
-          pswpModule: () => import('photoswipe'),
+            gallery: '#mi_galeria_' + producto.id_producto,
+            children: 'a',
+            pswpModule: () => import('photoswipe'),
         });
         lightbox.init();
-    
+
         return () => {
-          lightbox.destroy();
-          lightbox = null;
+            lightbox.destroy();
+            lightbox = null;
         };
-      }, []);
+    }, []);
 
     const verImg = () => {
         document.getElementById("imagen").click();
@@ -49,10 +49,10 @@ export default function ModalDos() {
         <div id="default-modal" tabIndex="-1" aria-hidden="true" className=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  h-[calc(100%-1rem)] max-h-full scrollbar ">
             {/* <div id="default-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"> */}
             {loadFontAwesome()}
-            {/* <div class="relative p-4 w-full max-w-2xl max-h-full"> */}
+            {/* <div className="relative p-4 w-full max-w-2xl max-h-full"> */}
             <div className="relative p-3 w-full ">
 
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     {/* <div className="relative border-[#6EE3A0] bg-white  dark:bg-dark-800 rounded-3xl  shadow-lg"> */}
 
                     <div className="flex bg-[#22C55E] items-center justify-between p-3 md:p-4 border-b-[#d9f99d] rounded-t-3xl  dark:border-gray-600">
@@ -72,7 +72,7 @@ export default function ModalDos() {
                         <div className=" ">
                             <div className="container">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-1">
-                                     
+
                                     {/* Parte izquierda: Imagen principal y thumbnails */}
                                     <div className="w-full h-full  flex items-center justify-center">
 
@@ -80,17 +80,17 @@ export default function ModalDos() {
                                         <img src={obtenerImagenUrl()} onClick={verImg} alt='' className="mx-auto " />
 
                                         {/* Miniaturas que estan ocultos */}
-                                        <div id={ `mi_galeria_` + producto.id_producto} className="pswp-gallery hidden p-4">
+                                        <div id={`mi_galeria_` + producto.id_producto} className="pswp-gallery hidden p-4">
 
                                             {Object.values(producto.imagenes).map((imagen, index) => (
 
-                                                <a href={`https://multilaptops.net/${imagen.ruta_img}`} id='imagen' 
+                                                <a href={`https://multilaptops.net/${imagen.ruta_img}`} id='imagen'
                                                     // data-pswp-width={imagen.width}
                                                     // data-pswp-height={imagen.height}
                                                     // target="_blank" 
-                                                    key={index} 
-                                                    // className="hover:opacity-75  "
-                                                    >
+                                                    key={index}
+                                                // className="hover:opacity-75  "
+                                                >
                                                     <img src={`https://multilaptops.net/${imagen.ruta_img}`} alt={`Imagen ${index + 1}`} className="rounded-lg shadow-sm " />
                                                 </a>
 
@@ -119,45 +119,45 @@ export default function ModalDos() {
                                         <div className="my-1">
                                             <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
                                                 {[
-                                                "Procesador",
-                                                "Serie de procesador",
-                                                "Generación del procesador (Intel)",
-                                                "Memoria RAM",
-                                                "Unidad de estado solido (SSD)",
-                                                "Disco duro (HDD)",
-                                                "Pantalla",
-                                                "Gráficos",
+                                                    "Procesador",
+                                                    "Serie de procesador",
+                                                    "Generación del procesador (Intel)",
+                                                    "Memoria RAM",
+                                                    "Unidad de estado solido (SSD)",
+                                                    "Disco duro (HDD)",
+                                                    "Pantalla",
+                                                    "Gráficos",
                                                 ].map((cualidad, index) => {
-                                                // Filtrar primero para ver si hay datos válidos
-                                                const especificacionesFiltradas = Object.values(producto.especificacion).filter(row => row.cualidad === cualidad);
+                                                    // Filtrar primero para ver si hay datos válidos
+                                                    const especificacionesFiltradas = Object.values(producto.especificacion).filter(row => row.cualidad === cualidad);
 
-                                                // Encuentra el primer ícono para esta cualidad
-                                                const iconoParaCualidad = especificacionesFiltradas.find(row => row.icono_tipocualidad)?.icono_tipocualidad;
+                                                    // Encuentra el primer ícono para esta cualidad
+                                                    const iconoParaCualidad = especificacionesFiltradas.find(row => row.icono_tipocualidad)?.icono_tipocualidad;
 
-                                                // Verificar si hay al menos una especificación válida antes de imprimir
-                                                if (especificacionesFiltradas.length > 0) {
-                                                    return (
-                                                    <li key={index} className="pb-3 sm:pb-4">
-                                                        <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                                                        <div className="flex-shrink-0 text-center">
-                                                            {/* Renderizar el ícono solo si existe uno para esta cualidad */}
-                                                            {iconoParaCualidad && <i className={`fa ${iconoParaCualidad} rounded-full`}></i>}
-                                                        </div>
-                                                        <div className="flex-1 min-w-0">
-                                                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                            {cualidad}
-                                                            </p>
-                                                            {especificacionesFiltradas.map((row, i) => (
-                                                            <p key={i} className="text-sm truncate dark:text-gray-400">
-                                                                {row.referencia_esp}
-                                                            </p>
-                                                            ))}
-                                                        </div>
-                                                        </div>
-                                                    </li>
-                                                    );
-                                                }
-                                                return null;
+                                                    // Verificar si hay al menos una especificación válida antes de imprimir
+                                                    if (especificacionesFiltradas.length > 0) {
+                                                        return (
+                                                            <li key={index} className="pb-3 sm:pb-4">
+                                                                <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                                                                    <div className="flex-shrink-0 text-center">
+                                                                        {/* Renderizar el ícono solo si existe uno para esta cualidad */}
+                                                                        {iconoParaCualidad && <i className={`fa ${iconoParaCualidad} rounded-full`}></i>}
+                                                                    </div>
+                                                                    <div className="flex-1 min-w-0">
+                                                                        <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                                            {cualidad}
+                                                                        </p>
+                                                                        {especificacionesFiltradas.map((row, i) => (
+                                                                            <p key={i} className="text-sm truncate dark:text-gray-400">
+                                                                                {row.referencia_esp}
+                                                                            </p>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    }
+                                                    return null;
                                                 })}
                                             </ul>
 
