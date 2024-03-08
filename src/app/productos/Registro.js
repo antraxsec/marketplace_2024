@@ -4,8 +4,9 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } 
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { app } from '../firebaseConfig';
 import { useProductos } from '@/context/Context';
-
+import { useRouter } from 'next/navigation'
 const Registro = () => {
+    const router = useRouter()
     const { setUser } = useProductos();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -61,12 +62,14 @@ const Registro = () => {
                     celular: celular,
                     rol: rol
                 })
+
                 console.log('Usuario registrado con éxito', {
                     email: user.email,
                     nombre: nombre,
                     celular: celular,
                     rol: rol
                 });
+                router.push('/productos', { scroll: false });
             } catch (error) {
                 setError('Error en el registro: ' + error.message);
             }
