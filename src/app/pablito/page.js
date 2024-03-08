@@ -1,19 +1,53 @@
-import React from 'react'
-import { Fancybox } from "@fancyapps/ui";
-import "@fancyapps/ui/dist/fancybox/fancybox.css";
+"use client"
+import React, { useEffect } from 'react';
+import '@fancyapps/ui/dist/fancybox/fancybox.css';
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.esm.js';
 
-export default function page() {
+
+
+const HomePage = () => {
+    useEffect(() => {
+        Fancybox.bind('#gallery-wrap-a [data-fancybox]', {
+            wheel: 'slide',
+        });
+
+        Fancybox.bind('#gallery-wrap-b [data-fancybox]', {
+            wheel: 'close',
+        });
+    }, []);
 
     return (
         <div>
-            hola
-            <a href="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301591/7129068354.webp" data-fancybox="gallery" data-caption="Caption #1">
-                <img src="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301591/7129068354.webp" />
-            </a>
-
-            <a href="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301721/6230189457.webp" data-fancybox="gallery" data-caption="Caption #2">
-                <img src="https://multilaptops.net/recursos/imagenes/productos/ecommerce/301721/6230189457.webp" />
-            </a>
+            <div id="gallery-wrap-a">
+                <h1>Gallery #1</h1>
+                <p>
+                    <a data-fancybox="gallery" data-src="https://lipsum.app/id/1/1024x768">
+                        <img src="https://lipsum.app/id/1/200x150" />
+                    </a>
+                    <a data-fancybox="gallery" data-src="https://lipsum.app/id/2/1024x768">
+                        <img src="https://lipsum.app/id/2/200x150" />
+                    </a>
+                    <a data-fancybox="gallery" data-src="https://lipsum.app/id/3/1024x768">
+                        <img src="https://lipsum.app/id/3/200x150" />
+                    </a>
+                </p>
+            </div>
+            <div id="gallery-wrap-b">
+                <h1>Gallery #2</h1>
+                <p>
+                    <a data-fancybox="gallery" data-src="https://lipsum.app/id/4/1024x768">
+                        <img src="https://lipsum.app/id/4/200x150" />
+                    </a>
+                    <a data-fancybox="gallery" data-src="https://lipsum.app/id/5/1024x768">
+                        <img src="https://lipsum.app/id/5/200x150" />
+                    </a>
+                    <a data-fancybox="gallery" data-src="https://lipsum.app/id/67/1024x768">
+                        <img src="https://lipsum.app/id/6/200x150" />
+                    </a>
+                </p>
+            </div>
         </div>
-    )
-}
+    );
+};
+
+export default HomePage;

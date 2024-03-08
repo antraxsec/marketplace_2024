@@ -7,6 +7,9 @@ import 'photoswipe/dist/photoswipe.css';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import 'photoswipe/style.css'; // Si estás usando PhotoSwipe v5
 
+//nueva libreria imagen
+import '@fancyapps/ui/dist/fancybox/fancybox.css';
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.esm.js';
 
 
 
@@ -44,6 +47,20 @@ export default function ModalDos() {
 
     //   console.log('ssss', propiedadesFiltradas)
 
+    /**
+     * Nueva libreria de images
+     */
+
+    useEffect(() => {
+        Fancybox.bind('#gallery-wrap-a [data-fancybox]', {
+            wheel: 'slide',
+        });
+
+        Fancybox.bind('#gallery-wrap-b [data-fancybox]', {
+            wheel: 'close',
+        });
+    }, []);
+
     return (
 
         <div id="default-modal" tabIndex="-1" aria-hidden="true" className=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  h-[calc(100%-1rem)] max-h-full scrollbar ">
@@ -73,28 +90,98 @@ export default function ModalDos() {
                             <div className="container">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-1">
 
+
+                                    {/* nueva img */}
+                                    {/* <div>
+                                        <div id="gallery-wrap-a" >
+                                            <h1>Gallery #1</h1>
+                                            <p>
+                                                <a data-fancybox="gallery" data-src="https://lipsum.app/id/1/1024x768">
+                                                    <img src="https://lipsum.app/id/1/200x150" />
+                                                </a>
+                                                <a data-fancybox="gallery" data-src="https://lipsum.app/id/2/1024x768">
+                                                    <img src="https://lipsum.app/id/2/200x150" />
+                                                </a>
+                                                <a data-fancybox="gallery" data-src="https://lipsum.app/id/3/1024x768">
+                                                    <img src="https://lipsum.app/id/3/200x150" />
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div id="gallery-wrap-b">
+                                            <h1>Gallery #2</h1>
+                                            <p>
+                                                <a data-fancybox="gallery" data-src="https://lipsum.app/id/4/1024x768">
+                                                    <img src="https://lipsum.app/id/4/200x150" />
+                                                </a>
+                                                <a data-fancybox="gallery" data-src="https://lipsum.app/id/5/1024x768">
+                                                    <img src="https://lipsum.app/id/5/200x150" />
+                                                </a>
+                                                <a data-fancybox="gallery" data-src="https://lipsum.app/id/67/1024x768">
+                                                    <img src="https://lipsum.app/id/6/200x150" />
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div> */}
+                                    {/* <div id="gallery-wrap-a" class="grid grid-cols-3 gap-4 max-w-xl mx-auto p-10">
+                                        <h1>Gallery #1</h1>
+
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/60/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/60/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/61/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/61/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/62/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/62/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/63/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/63/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/64/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/64/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/65/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/65/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/66/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/66/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/67/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/67/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/68/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/68/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/69/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/69/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/70/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/70/200x150" />
+                                        </a>
+                                        <a data-fancybox="gallery" data-src="https://lipsum.app/id/71/1600x1200">
+                                            <img class="rounded" src="https://lipsum.app/id/71/200x150" />
+                                        </a>
+
+                                    </div> */}
+                                    {/* end nueva img */}
+
+
                                     {/* Parte izquierda: Imagen principal y thumbnails */}
                                     <div className="w-full h-full  flex items-center justify-center">
 
-                                        {/* imagen grande */}
-                                        <img src={obtenerImagenUrl()} onClick={verImg} alt='' className="mx-auto " />
+                                        <div id="gallery-wrap-a" class="grid grid-cols-3 gap-4 max-w-xl mx-auto p-10">
 
-                                        {/* Miniaturas que estan ocultos */}
-                                        <div id={`mi_galeria_` + producto.id_producto} className="pswp-gallery hidden p-4">
+                                            {Object.values(producto.imagenes).slice(0, 12).map((imagen, i) => {
+                                                if (imagen.cod_albumtipo == '1') {
+                                                    return (<a data-fancybox="gallery" data-src={`https://multilaptops.net/${imagen.ruta_img}`}>
+                                                        <img class="rounded shadow-md" src={`https://multilaptops.net/${imagen.ruta_img}`} />
+                                                    </a>)
+                                                }
+                                            }
 
-                                            {Object.values(producto.imagenes).map((imagen, index) => (
+                                            )}
 
-                                                <a href={`https://multilaptops.net/${imagen.ruta_img}`} id='imagen'
-                                                    // data-pswp-width={imagen.width}
-                                                    // data-pswp-height={imagen.height}
-                                                    // target="_blank" 
-                                                    key={index}
-                                                // className="hover:opacity-75  "
-                                                >
-                                                    <img src={`https://multilaptops.net/${imagen.ruta_img}`} alt={`Imagen ${index + 1}`} className="rounded-lg shadow-sm " />
-                                                </a>
 
-                                            ))}
                                         </div>
 
                                     </div>
