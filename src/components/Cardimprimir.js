@@ -50,6 +50,7 @@ function Cardimprimir({ producto }) {
                             "Disco duro (HDD)",
                             "Pantalla",
                             "Gráficos",
+                            // "Gráficos",
                         ].map((cualidad, index) => {
                             // Primero, filtramos las especificaciones que coincidan con la cualidad actual.
                             const especificacionesFiltradas = Object.values(producto.especificacion).filter(row => row.cualidad === cualidad);
