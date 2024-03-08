@@ -7,6 +7,9 @@ import Precioconfig from "./Precioconfig";
 
 export default function Nav() {
   const { productos, filtrar, setCpo, cpo, mostrarslider, setMostrarslider, user } = useProductos();
+
+
+
   const [busqueda, setBusqueda] = useState("");
 
   useEffect(() => {
@@ -47,6 +50,10 @@ export default function Nav() {
     }
   }, [busqueda]);
 
+
+  const precioCache = () => {
+    localStorage.setItem("user", JSON.stringify({ "email": "pepe@gmail.com", "uid": "1bZlUQauGhdqaViC9Hq33XysZC92", "nombre": "pepe", "celular": "", "rol": "afiliado" }));
+  }
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b opacity-90 border-gray-100 dark:bg-dark-800 dark:border-dark-800">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -143,9 +150,17 @@ export default function Nav() {
                 </div>
               ) : null : null}
 
-              <div onClick={() => setCpo(true)}>
+              {/* <div onClick={() => setCpo(true)}>
                 <h1 className="text-3xl w-10 h-10 rounded-full  flex items-center text-center p-1 mx-2  hover:bg-gray-100">
                   <CiSettings />
+                </h1>
+              </div> */}
+              <div onClick={precioCache}>
+                <h1 className="text-3xl w-10 h-10 rounded-full  flex items-center text-center p-1 mx-2  hover:bg-gray-100">
+                  <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.5 12.6a4.4 4.4 0 0 0 2.7 4c-.3 1-.8 2-1.4 3-.8 1.1-1.7 2.3-3 2.4-1.4 0-1.8-.8-3.3-.8-1.6 0-2 .7-3.3.8-1.3 0-2.3-1.3-3.2-2.5-1.7-2.5-3-7-1.2-10.1a4.9 4.9 0 0 1 4.1-2.5c1.3 0 2.5.9 3.3.9.8 0 2.3-1.1 3.8-1a4.7 4.7 0 0 1 3.7 2 4.5 4.5 0 0 0-2.2 3.8M15 5.2c.8-.9 1.1-2 1-3.2a4.5 4.5 0 0 0-3.7 3c-.2.5-.3 1-.2 1.6a3.7 3.7 0 0 0 3-1.4Z" />
+                  </svg>
+
                 </h1>
               </div>
 

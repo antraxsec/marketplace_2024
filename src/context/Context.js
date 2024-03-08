@@ -103,27 +103,40 @@ export const ProductosProvider = ({ children }) => {
 
   // especial para precio 
   useEffect(() => {
-
-
-    //recuperar datos de firebase afiliados
+    console.log('Subscribiéndose a cambios en los datos de precio...');
+    // Recuperar datos de Firebase afiliados
     const documentoId = 'afiliado';
     const docRef = doc(db, "PrecioModificable", documentoId);
-    const unsubscribe = onSnapshot(docRef, (doc) => {
+
+    // Iniciar la escucha de cambios en el documento
+    const unsubscribe = onSnapshot(docRef, async (doc) => {
       if (doc.exists()) {
         console.log("Datos actuales: ", doc.data());
-        setConfigPrecio(doc.data());
+
+        console.log('usuario', user)
+        if (user) {
+          if (doc.data().tipoUsuario === user.rol) {
+            setConfigPrecio(doc.data());
+          }
+        } else {
+
+        }
+
+
 
       } else {
         // Documento no existe
         console.log("El documento no existe!");
       }
     });
-    unsubscribe()
 
-    setConfigPrecio(recuperarDeLocalStorage("config-precio"));
+    // Limpiar la suscripción cuando el componente se desmonte
+    return () => unsubscribe();
+
+  }, [user]);
+  // end especial para precio
 
 
-  }, [])
 
 
   const filtrar = (data) => {
