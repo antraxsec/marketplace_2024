@@ -29,34 +29,33 @@ const Login = () => {
             const docRef = doc(db, "usuarios", user.uid);
             const docSnap = await getDoc(docRef);
 
+            let userData;
             if (docSnap.exists()) {
                 // Si el documento existe, combina los datos de Firestore con los de autenticación
-                const userData = {
+                userData = {
                     email: user.email,
                     uid: user.uid,
                     ...docSnap.data() // Incorpora los datos adicionales de Firestore
                 };
-                //Ma;na hacer esto firebase deploy --cache-bust
-                // Guarda los datos combinados en localStorage
-                console.log('Guardando usuario en localStorage', userData);
-                localStorage.setItem("user", JSON.stringify(userData));
-
-                // Confirma que los datos se han guardado correctamente en localStorage
-                console.log('Usuario guardado en localStorage:', localStorage.getItem("user"));
-
-                // Redirección a la página de productos
-                // router.push('/productos', { scroll: false });
             } else {
-                // Si no se encuentran datos adicionales, maneja la situación adecuadamente (opcional)
-                console.log("No se encontraron datos adicionales del usuario.");
-                // Puedes elegir guardar solo los datos de autenticación y redirigir
-                const basicUserData = {
+                // Si no se encuentran datos adicionales, utiliza solo los datos de autenticación
+                userData = {
                     email: user.email,
                     uid: user.uid
                 };
-                localStorage.setItem("user", JSON.stringify(basicUserData));
-                router.push('/productos', { scroll: false });
             }
+
+            // Guarda los datos del usuario en localStorage
+            console.log('Guardando usuario en localStorage', userData);
+            localStorage.setItem("user", JSON.stringify(userData));
+            setUser(userData)
+
+            // Confirma que los datos se han guardado correctamente en localStorage
+            console.log('Usuario guardado en localStorage:', localStorage.getItem("user"));
+
+            // Redirección a la página de productos después de guardar los datos
+            router.push('/productos', { scroll: false });
+
         } catch (error) {
             // Maneja errores, como credenciales incorrectas o problemas de red
             setError('Error al iniciar sesión: ' + error.message);
@@ -65,25 +64,25 @@ const Login = () => {
     };
 
     //rediregir si esta logueado
-    const [activo, setActivo] = useState(false);
+    // const [activo, setActivo] = useState(false);
 
-    useEffect(() => {
-        const auth = getAuth(app); // Utiliza la instancia de la aplicación Firebase inicializada
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // Usuario está autenticado
-                router.push('/productos');
-            } else {
-                // Usuario no está autenticado
+    // useEffect(() => {
+    //     const auth = getAuth(app); // Utiliza la instancia de la aplicación Firebase inicializada
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             // Usuario está autenticado
+    //             router.push('/productos');
+    //         } else {
+    //             // Usuario no está autenticado
 
-                setActivo(true);
-            }
-        });
-    }, []);
+    //             setActivo(true);
+    //         }
+    //     });
+    // }, []);
 
-    if (!activo) {
-        return <Loading />;
-    }
+    // if (!activo) {
+    //     return <Loading />;
+    // }
 
 
 
