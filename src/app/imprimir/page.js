@@ -1,11 +1,46 @@
-
-import api from '../api';
+'use client'
+import { useEffect, useState } from 'react';
+//import api from '../api';
 import Cuerpo from './Cuerpo';
+import Loading from '@/components/Loading';
 
 
-export default async function page() {
-    let productos = await api.productos()
-    //console.log(productos)
+export default function page() {
+    const [productonew, setProductonew] = useState([])
+    const [activo, setActivo] = useState(false);
+    const fetchProducto = async () => {
+        try {
+            const response = await fetch(
+                "https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G",
+                { cache: "no-store" }
+            );
+            const data = await response.json();
+            let datosNuevos = Object.values(data.datos);
+            setProductonew(datosNuevos)
+            setActivo(true);
+            // console.log(datosNuevos)
+            // const datosAlmacenados = recuperarDeLocalStorage("productos");
+            // // Comparamos los datos nuevos con los almacenados
+            // if (JSON.stringify(datosNuevos) !== JSON.stringify(datosAlmacenados)) {
+            //     console.log("Actualizando datos...");
+
+            //     setProductos(datosNuevos);
+            //     guardarEnLocalStorage("productos", datosNuevos);
+            //     setProductosFiltrados(datosNuevos);
+            //     setIsLoaded(true);
+            // } else {
+            //     console.log("Los datos no han cambiado, no se requiere actualización.");
+            // }
+        } catch (error) {
+            console.error("Error al cargar datos:", error);
+        }
+    };
+    useEffect(() => {
+        fetchProducto()
+    }, [])
+
+    //let productos = await 
+    console.log('Nuevo datos bien ', productonew)
 
     function printContent() {
         // Hide elements you don't want to print using JavaScript (optional)
@@ -34,10 +69,12 @@ export default async function page() {
     };
 
 
+    if (!activo) {
+        return <Loading />;
+    }
 
     return (<>
-        <Cuerpo productos={productos} />
-
+        <Cuerpo productos={productonew} />
     </>
     )
 }

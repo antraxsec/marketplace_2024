@@ -21,6 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es" className=''>
+
       <link rel="icon" href="icon-192x192.png" />
       <body className={`${inter.className} scrollbar `}>
         <ProductosProvider>{children}</ProductosProvider>
