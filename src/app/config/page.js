@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation'
 import Loading from '@/components/Loading';
 import { useProductos } from '@/context/Context';
 import Link from 'next/link';
+import UsersList from './UsersList';
+
 
 export default function page() {
   const router = useRouter()
@@ -239,7 +241,10 @@ export default function page() {
         </div>
         <div className="col-span-2 md:col-span-1 flex items-center justify-center">
           {/* Contenido adicional aquí */}
-          <div className="text-center text-[#15803d]">Contenido adicional</div>
+          <div className="text-center text-[#15803d]"> Usuario Registrados
+            <UsersList />
+          </div>
+
         </div>
       </div>
     </form>

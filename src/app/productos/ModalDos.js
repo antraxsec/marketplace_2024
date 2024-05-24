@@ -72,7 +72,7 @@ export default function ModalDos() {
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     {/* <div className="relative border-[#6EE3A0] bg-white  dark:bg-dark-800 rounded-3xl  shadow-lg"> */}
 
-                    <div className="flex bg-[#22C55E] items-center justify-between p-3 md:p-4 border-b-[#d9f99d] rounded-t-3xl  dark:border-gray-600">
+                    <div className="flex bg-gray-700 items-center justify-between p-3 md:p-4 border-b-[#d9f99d] rounded-t-3xl  dark:border-gray-600">
                         <h3 className="text-xl font-semibold text-gray-100 dark:text-white ">
                             {producto.id_producto}
                         </h3>
@@ -174,7 +174,7 @@ export default function ModalDos() {
                                             {Object.values(producto.imagenes).slice(0, 12).map((imagen, i) => {
                                                 if (imagen.cod_albumtipo == '1') {
                                                     return (<a data-fancybox="gallery" data-src={`https://multilaptops.net/${imagen.ruta_img}`}>
-                                                        <img class="rounded shadow-md" src={`https://multilaptops.net/${imagen.ruta_img}`} />
+                                                        <img class="rounded shadow-sm" src={`https://multilaptops.net/${imagen.ruta_img}`} />
                                                     </a>)
                                                 }
                                             }

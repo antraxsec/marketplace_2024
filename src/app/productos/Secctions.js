@@ -22,6 +22,9 @@ export default function Secctions() {
   // useEffect(() => {
   //     console.log(productosFiltrados)
   // }, [productosFiltrados]);
+  const productosOrdenadosPorPrecio = productosFiltrados.sort((a, b) => parseFloat(a.costo_avg) - parseFloat(b.costo_avg));
+
+
   return (
     <div className="pt-6 p-3 sm:ml-64  dark:bg-dark-800 ">
       {
@@ -85,7 +88,7 @@ export default function Secctions() {
 
         {/* card */}
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-          {productosFiltrados.map((producto, i) => (
+          {productosOrdenadosPorPrecio.map((producto, i) => (
             <Cards key={i} producto={producto} />
           ))}
         </div>

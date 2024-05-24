@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { CiSettings } from "react-icons/ci";
 import FlexSearch from 'flexsearch';
 import Precioconfig from "./Precioconfig";
+import Link from 'next/link';
 
 export default function Nav() {
   const { productos, filtrar, setCpo, cpo, mostrarslider, setMostrarslider, user } = useProductos();
@@ -96,7 +97,7 @@ export default function Nav() {
               <h1 className=" hidden sm:block text-2xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r to-[#4ade80] from-sky-200">
                   Store
-                </span>{" "}
+                </span>
               </h1>
 
               {/* <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">multilaptops</span> */}
@@ -166,8 +167,8 @@ export default function Nav() {
 
 
               <div>
-                <button
-                  type="button"
+                <Link
+                  href={'/perfil'}
                   className="flex p-1 mx-2 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                   aria-expanded="false"
                   data-dropdown-toggle="dropdown-user"
@@ -176,7 +177,7 @@ export default function Nav() {
                   <svg className="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a9 9 0 0 0 5-1.5 4 4 0 0 0-4-3.5h-2a4 4 0 0 0-4 3.5 9 9 0 0 0 5 1.5Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   </svg>
-                </button>
+                </Link>
 
 
               </div>

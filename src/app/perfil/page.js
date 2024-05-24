@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from '../firebaseConfig'; //
 import { useRouter } from 'next/navigation'
 import Loading from '@/components/Loading';
@@ -24,6 +24,15 @@ export default function page() {
             }
         });
     }, []);
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            await localStorage.removeItem('user');
+            console.log('Sesión cerrada con éxito');
+        } catch (error) {
+            console.error('Error cerrando la sesión: ', error);
+        }
+    };
 
     if (!activo) {
         return <Loading />;
@@ -83,10 +92,16 @@ export default function page() {
                 </footer>
                 <div className='text-center mt-3'>
                     <Link href='/productos' className="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-gray-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg className="w-3 h-3 text-white dark:text-white mx-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3 text-white dark:text-white mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.2 19c-1-3.2 1-10.8 8.3-10.8V6.1a1 1 0 0 1 1.6-.9l5.5 4.3a1.1 1.1 0 0 1 0 1.7L14 15.6a1 1 0 0 1-1.6-1v-2c-7.2 1-8.3 6.4-8.3 6.4Z" />
                         </svg>
                         Regresar
+                    </Link>
+                    <Link href='/' onClick={handleLogout} className="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-gray-400 bg-gray-50 border mx-2 border-gray-400  rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="w-4 h-4 text-gray-400 mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
+                        </svg>
+                        Salir
                     </Link>
                 </div>
 

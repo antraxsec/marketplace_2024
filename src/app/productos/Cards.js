@@ -1,6 +1,7 @@
 import { useProductos } from "@/context/Context";
 import React from "react";
 
+
 export default function Cards({ producto }) {
   const { precioConfigurado, isChecked, setProducto, setVerproducto } = useProductos();
   const obtenerImagenUrl = () => {
@@ -16,6 +17,7 @@ export default function Cards({ producto }) {
       <div className="flex flex-col items-center">
         <img
           onClick={() => {
+
             setProducto(producto);
             setVerproducto(true);
           }}

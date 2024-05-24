@@ -563,6 +563,19 @@ export default function Aside() {
                             <span className="ms-3 text-gray-400">Perfil</span>
                         </Link>
                     </li>
+                    <li>
+                        <Link
+
+                            href="/buscar"
+                            className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        >
+                            <svg className="w-6 h-6 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeWidth="2" d="M7 17v1c0 .6.4 1 1 1h8c.6 0 1-.4 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+
+                            <span className="ms-3 text-gray-400">Buscar</span>
+                        </Link>
+                    </li>
                     {/* configuracio */}
                     {user ? user.rol === 'admin' ? (
                         <li>
