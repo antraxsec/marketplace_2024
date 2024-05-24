@@ -3,7 +3,7 @@
 
 const nextConfig = {
     reactStrictMode: true,
-    output: 'standalone',
+    output: 'export',
     experimental: {
         ppr: false
     }
