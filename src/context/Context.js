@@ -3,7 +3,6 @@ import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import { db } from '../app/firebaseConfig'; // Asegúrate de que la ruta sea correcta
 import { doc, onSnapshot } from "firebase/firestore";
 
-
 export const ProductosContext = createContext();
 export const useProductos = () => {
   const context = useContext(ProductosContext);
@@ -116,7 +115,6 @@ export const ProductosProvider = ({ children }) => {
     setUser(recuperarDeLocalStorage("user"));
 
   }, []);
-
 
   // especial para precio 
   useEffect(() => {
