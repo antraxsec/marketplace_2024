@@ -1,0 +1,100 @@
+Listado de rutas de carpetas
+El número de serie del volumen es 0E30-534F
+C:.
+¦   estructura.txt
+¦   
++---app
+¦   ¦   Accordion.js
+¦   ¦   Animation.json
+¦   ¦   api.js
+¦   ¦   Buscar.js
+¦   ¦   Buscar1.js
+¦   ¦   Buscar2.js
+¦   ¦   Cuerpoacordion.js
+¦   ¦   data.js
+¦   ¦   favicon.ico
+¦   ¦   firebase.js
+¦   ¦   firebaseConfig.js
+¦   ¦   fontawesome.min.css
+¦   ¦   globals.css
+¦   ¦   layout.js
+¦   ¦   link.js
+¦   ¦   MultiLaptops3D.module.css
+¦   ¦   Navbar.js
+¦   ¦   page.js
+¦   ¦   Precio.js
+¦   ¦   
+¦   +---administrador
+¦   ¦       Checket.js
+¦   ¦       Checketdos.js
+¦   ¦       Input.js
+¦   ¦       page.js
+¦   ¦       ProductSearch.js
+¦   ¦       ProductTable.js
+¦   ¦       
+¦   +---config
+¦   ¦       ejemplo.js
+¦   ¦       page.js
+¦   ¦       
+¦   +---imprimir
+¦   ¦       Cuerpo.js
+¦   ¦       page.js
+¦   ¦       
+¦   +---item
+¦   ¦   ¦   Buscador.js
+¦   ¦   ¦   Carousel.js
+¦   ¦   ¦   Checket2.js
+¦   ¦   ¦   Cuerpoitemid.js
+¦   ¦   ¦   guardadoCard.js
+¦   ¦   ¦   Image.js
+¦   ¦   ¦   ImageLoader.js
+¦   ¦   ¦   LottieAnimation.js
+¦   ¦   ¦   MultiLaptops3D.js
+¦   ¦   ¦   page.js
+¦   ¦   ¦   Splidecomponent.js
+¦   ¦   ¦   Splidecomponent2.js
+¦   ¦   ¦   Splidecomponent3.js
+¦   ¦   ¦   
+¦   ¦   +---[id]
+¦   ¦           page.js
+¦   ¦           
+¦   +---pablito
+¦   ¦       page.js
+¦   ¦       
+¦   +---perfil
+¦   ¦       page.js
+¦   ¦       
+¦   +---precios
+¦   ¦       page.js
+¦   ¦       
+¦   +---productos
+¦   ¦       Aside.js
+¦   ¦       Cards.js
+¦   ¦       Footer.js
+¦   ¦       GaleriaImagenes.js
+¦   ¦       Login.js
+¦   ¦       ModalDos.js
+¦   ¦       Nav.js
+¦   ¦       page.js
+¦   ¦       Precioconfig.js
+¦   ¦       Registro.js
+¦   ¦       Secctions.js
+¦   ¦       
+¦   +---qr
+¦   ¦       page.js
+¦   ¦       QRScanner.js
+¦   ¦       
+¦   +---services
+¦           apis.js
+¦           fontawesome.js
+¦           
++---components
+¦       Buscador.js
+¦       Card.js
+¦       Cardimprimir.js
+¦       Loading.js
+¦       Modal.js
+¦       
++---context
+        Context.js
+        

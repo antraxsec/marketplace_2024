@@ -6,7 +6,7 @@ const api = {
       );
       const data = await response.json();
       let datosnew = Object.values(data.datos);
-      //  console.log('uno', datosnew)
+      console.log('productos AAA:', datosnew)
       return datosnew;
     } catch (error) {
       console.error("Error al cargar datos:", error);

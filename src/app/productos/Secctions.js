@@ -16,7 +16,8 @@ export default function Secctions() {
     verproducto,
     setCpo,
     cpo,
-    setMostrarslider
+    setMostrarslider,
+    globalTC 
   } = useProductos();
 
   // useEffect(() => {
@@ -75,6 +76,7 @@ export default function Secctions() {
             <circle cx="1.5" cy="2" r="1.5" fill="#6B7280" />
           </svg>
           <p className="">Laptops</p>
+          <p>TC: Bs. {globalTC.toFixed(2)}</p>
         </span>
 
         {/* no hay producto */}

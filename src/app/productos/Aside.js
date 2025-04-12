@@ -87,7 +87,7 @@ export default function Aside() {
                                 <svg className="w-6 h-6 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21a9 9 0 0 1-.5-18v0A9 9 0 0 0 20 15h.5a9 9 0 0 1-8.5 6Z" />
                                 </svg>
-                                <span className="ms-3 text-gray-400">Theme</span>
+                                <span className="ms-3 text-gray-400">Modo dark</span>
                             </a>
                         ) : (
                             <a
@@ -99,7 +99,7 @@ export default function Aside() {
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5V3m0 18v-2M7 7 5.7 5.7m12.8 12.8L17 17M5 12H3m18 0h-2M7 17l-1.4 1.4M18.4 5.6 17 7.1M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
                                 </svg>
 
-                                <span className="ms-3 text-gray-400">Theme</span>
+                                <span className="ms-3 text-gray-400">Modo dark</span>
                             </a>
                         )}
 
@@ -168,7 +168,7 @@ export default function Aside() {
                                             }
                                             className="w-5 h-5 mr-2 text-[#31C48D] bg-[#F3FAF7] border-[#31C48D] rounded-lg focus:ring-blue-100 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                                         />
-                                        Hp
+                                        HP
                                     </label>
                                 </div>
                             </li>

@@ -27,7 +27,8 @@ export const ProductosProvider = ({ children }) => {
   const [configPrecio, setConfigPrecio] = useState({}); //configuracion de precio
   const [cpo, setCpo] = useState(false); //para mostrar la configuracion del precio
   const [mostrarslider, setMostrarslider] = useState(true);//mostrar el sidevar en SM para moviles 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+  const [globalTC, setGlobalTC] = useState(13.5); // Estado para tipo de cambio global
 
   // Función para guardar en localStorage
   const guardarEnLocalStorage = (key, value) => {
@@ -39,24 +40,6 @@ export const ProductosProvider = ({ children }) => {
     return JSON.parse(localStorage.getItem(key));
   };
 
-  // const fetchProducto = async () => {
-  //   setIsLoaded(false);
-  //   try {
-  //     const response = await fetch("https://multilaptops.net/api/productosdisp?token=j6UWgtktboQBFD4G", { cache: "no-store" });
-  //     const data = await response.json();
-  //     let datosnew = Object.values(data.datos);
-  //     setProductos(datosnew);
-  //     setProductosFiltrados(datosnew)
-  //     setIsLoaded(true);
-  //     guardarEnLocalStorage('productos', datosnew)
-  //     return datosnew
-  //   } catch (error) {
-  //     console.error("Error al cargar datos:", error);
-  //   }
-  //   setIsLoaded(true);
-  // };
-
-  //nuevo funcional
   const fetchProducto = async () => {
     try {
       const response = await fetch(
@@ -64,16 +47,42 @@ export const ProductosProvider = ({ children }) => {
         { cache: "no-store" }
       );
       const data = await response.json();
-      let datosNuevos = Object.values(data.datos);
-      // console.log(datosNuevos)
-      const datosAlmacenados = recuperarDeLocalStorage("productos");
-      // Comparamos los datos nuevos con los almacenados
-      if (JSON.stringify(datosNuevos) !== JSON.stringify(datosAlmacenados)) {
-        console.log("Actualizando datos...");
 
+      console.log('fetchProducto BBBB:', data)
+
+      let datosNuevos = Object.values(data.datos);
+      const configNuevo = data.config;
+
+      // Recuperar datos almacenados
+      const datosAlmacenados = recuperarDeLocalStorage("productos");
+      const configAlmacenado = recuperarDeLocalStorage("config");
+
+      // Comparamos los datos nuevos con los almacenados, incluyendo el config
+      const productosHanCambiado = JSON.stringify(datosNuevos) !== JSON.stringify(datosAlmacenados);
+      const configHaCambiado = JSON.stringify(configNuevo) !== JSON.stringify(configAlmacenado);
+
+      if (productosHanCambiado || configHaCambiado) {
+        console.log("Actualizando datos...", {
+          productosHanCambiado,
+          configHaCambiado
+        });
+
+        // Actualizar productos
         setProductos(datosNuevos);
         guardarEnLocalStorage("productos", datosNuevos);
         setProductosFiltrados(datosNuevos);
+
+        // Actualizar config y tipo de cambio
+        window.config = configNuevo;
+        guardarEnLocalStorage("config", configNuevo);
+
+        // Actualizar tipo de cambio global
+        if (configNuevo && configNuevo[0] && configNuevo[0].tc) {
+          const nuevoTC = Number(configNuevo[0].tc);
+          setGlobalTC(nuevoTC);
+          guardarEnLocalStorage("globalTC", nuevoTC);
+        }
+
         setIsLoaded(true);
       } else {
         console.log("Los datos no han cambiado, no se requiere actualización.");
@@ -91,8 +100,14 @@ export const ProductosProvider = ({ children }) => {
       setProductos(productosLocales);
       setIsLoaded(true);
     }
+
+    // Recuperar tipo de cambio guardado
+    const tcAlmacenado = recuperarDeLocalStorage("globalTC");
+    if (tcAlmacenado) {
+      setGlobalTC(tcAlmacenado);
+    }
+
     fetchProducto(); // Siempre se llama, pero actualiza solo si hay cambios.
-    // Asumiendo que tienes lógica similar para precioGanancia, tipoMoneda, etc.
 
     //precio recuperar - moneda
     setPrecioGanancia(recuperarDeLocalStorage("precio"));
@@ -108,7 +123,7 @@ export const ProductosProvider = ({ children }) => {
     console.log('Subscribiéndose a cambios en los datos de precio...');
     // Recuperar datos de Firebase afiliados
     if (user) {
-      console.log('usuario acrual', user)
+      console.log('usuario actual', user)
       if (user.rol !== 'admin') {
         const documentoId = user.rol;
         const docRef = doc(db, "PrecioModificable", documentoId);
@@ -134,9 +149,6 @@ export const ProductosProvider = ({ children }) => {
 
   }, [user]);
   // end especial para precio
-
-
-
 
   const filtrar = (data) => {
     guardarEnLocalStorage("productosFiltrados", data);
@@ -165,10 +177,10 @@ export const ProductosProvider = ({ children }) => {
     alert("actualizado data");
   };
 
-  // Mandar datos
   const precioConfigurado = (factor_avg, costo_avg, precio_config) => {
+    // Usar globalTC en lugar de window.config
+    const tipoCambio = globalTC;
 
-    // console.log('precio config', Object.values(precio_config), Object.values(precio_config).length)
     if (!configPrecio) {
       return "Sin Configurar";
     }
@@ -180,15 +192,23 @@ export const ProductosProvider = ({ children }) => {
     if (configPrecio.margen) configPrecio.margen = Number(configPrecio.margen);
 
     if (Object.values(precio_config) && Object.values(precio_config).length > 0) {
-      return `${precio_config[0].simbolo_moneda} ${Number(
-        precio_config[0].valor_precio
-      ).toFixed(2)}`;
+      const precioConfig = precio_config[0];
+      const precioOriginal = `${precioConfig.simbolo_moneda} ${Number(precioConfig.valor_precio).toFixed(2)}`;
+
+      // Si el precio está en dólares, agregar conversión a Bs
+      if (precioConfig.simbolo_moneda === 'US$') {
+        const precioBolivianos = Number(precioConfig.valor_precio) * tipoCambio;
+        return `${precioOriginal} \n(Bs ${precioBolivianos.toFixed(2)})`;
+      }
+
+      return precioOriginal;
     } else {
       if (configPrecio.tipoPrecio === "fijo") {
         if (configPrecio.moneda === "dolares") {
           let precioFin =
             configPrecio.tc * costo_avg + configPrecio.tc * configPrecio.margen;
-          return `Bs ${precioFin.toFixed(2)}`;
+          let precioOriginal = `US$ ${(configPrecio.tc * costo_avg).toFixed(2)}`;
+          return `${precioOriginal} \n(Bs ${precioFin.toFixed(2)})`;
         } else if (configPrecio.moneda === "bolivianos") {
           let precioFin = configPrecio.tc * costo_avg + configPrecio.margen;
           return `Bs ${precioFin.toFixed(2)}`;
@@ -197,7 +217,8 @@ export const ProductosProvider = ({ children }) => {
         if (configPrecio.moneda === "dolares") {
           let precioFin =
             costo_avg * factor_avg + factor_avg * configPrecio.margen;
-          return `Bs ${precioFin.toFixed(2)}`;
+          let precioOriginal = `US$ ${(costo_avg * factor_avg).toFixed(2)}`;
+          return `${precioOriginal} \n(Bs ${precioFin.toFixed(2)})`;
         } else if (configPrecio.moneda === "bolivianos") {
           let precioFin = costo_avg * factor_avg + configPrecio.margen;
           return `Bs ${precioFin.toFixed(2)}`;
@@ -239,7 +260,9 @@ export const ProductosProvider = ({ children }) => {
         mostrarslider,
         setMostrarslider,
         setUser,
-        user
+        user,
+        globalTC,
+        setGlobalTC
       }}
     >
       {children}
